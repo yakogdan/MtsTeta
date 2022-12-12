@@ -1,7 +1,8 @@
-package com.yakogdan.mtsteta
+package com.yakogdan.mtsteta.presentation.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.yakogdan.mtsteta.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
