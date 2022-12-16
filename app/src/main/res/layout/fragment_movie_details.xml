@@ -78,7 +78,7 @@
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_category_text_outline"
-            tools:text="Гнев человеческий" />
+            tools:text="@string/wrath_of_man_title" />
 
         <ImageView
             android:id="@+id/iv_item_movie_star_1"
