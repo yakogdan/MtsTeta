@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">MtsTeta</string>
+    <string name="category_text_outline">Обводка текста категории фильма</string>
+    <string name="main_click_message">Название: %1$s</string>
+    <string name="main_empty_message">Тут должен был быть текст</string>
+    <string name="star">Звезда</string>
+    <string name="movie_description">Эйч — загадочный и холодный на вид джентльмен, но внутри него пылает жажда справедливости. Преследуя свои мотивы, он внедряется в инкассаторскую компанию, чтобы выйти на соучастников серии многомиллионных ограблений, потрясших Лос-Анджелес. В этой запутанной игре у каждого своя роль, но под подозрением оказываются все. Виновных же обязательно постигнет гнев человеческий.</string>
+    <string name="actors">Актеры</string>
+    <string name="jason_statham">Джейсон Стэйтем</string>
+    <string name="holt_mccallany">Холт Маккэллани</string>
+    <string name="joshua_hartnett">Джош Хартнетт</string>
+    <string name="heading_movie_list">Популярно сейчас</string>
+    <string name="Search">Поиск</string>
+    <string name="movie_poster">Постер фильма</string>
+    <string name="soon">Скоро</string>
+    <string name="rating_bar">rating bar</string>
+    <string name="navigation_home">Home</string>
+    <string name="navigation_settings">Settings</string>
+    <string name="settings">Settings</string>
+    <string name="actor_photo">Actor photo</string>
 </resources>
