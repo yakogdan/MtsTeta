@@ -67,4 +67,8 @@ dependencies {
     def hiltVersion = "2.44.2"
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
+
+    // Coil
+    def coilVersion = "2.2.2"
+    implementation "io.coil-kt:coil:$coilVersion"
 }
