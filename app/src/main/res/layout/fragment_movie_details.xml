@@ -11,7 +11,7 @@
         tools:context=".presentation.fragments.MovieDetailsFragment">
 
         <ImageView
-            android:id="@+id/iv_movie_poster"
+            android:id="@+id/ivMoviePoster"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/movie_poster"
@@ -23,7 +23,7 @@
 
 
         <TextView
-            android:id="@+id/tv_category_text_outline"
+            android:id="@+id/tvCategoryTextOutline"
             style="@style/fontStyle_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,25 +36,25 @@
             android:paddingBottom="3dp"
             android:textSize="10sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_movie_poster"
+            app:layout_constraintTop_toBottomOf="@+id/ivMoviePoster"
             tools:ignore="SmallSp"
             tools:text="боевики" />
 
         <TextView
-            android:id="@+id/tv_date"
+            android:id="@+id/tvDate"
             style="@style/fontStyle_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_category_text_outline"
-            app:layout_constraintStart_toEndOf="@+id/tv_category_text_outline"
-            app:layout_constraintTop_toTopOf="@+id/tv_category_text_outline"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCategoryTextOutline"
+            app:layout_constraintStart_toEndOf="@+id/tvCategoryTextOutline"
+            app:layout_constraintTop_toTopOf="@+id/tvCategoryTextOutline"
             tools:ignore="SmallSp"
             tools:text="22.04.2021" />
 
         <TextView
-            android:id="@+id/tv_item_movie_age_limit"
+            android:id="@+id/tvAgeLimit"
             style="@style/fontStyle_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,12 +64,12 @@
             android:padding="10dp"
             android:textSize="13.8sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_movie_poster"
+            app:layout_constraintTop_toBottomOf="@+id/ivMoviePoster"
             tools:ignore="SmallSp"
             tools:text="18+" />
 
         <TextView
-            android:id="@+id/tv_movie_title"
+            android:id="@+id/tvMovieTitle"
             style="@style/fontStyle_1.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,66 +77,25 @@
             android:layout_marginTop="14dp"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_category_text_outline"
+            app:layout_constraintTop_toBottomOf="@+id/tvCategoryTextOutline"
             tools:text="@string/wrath_of_man_title" />
 
-        <ImageView
-            android:id="@+id/iv_item_movie_star_1"
+        <RatingBar
+            android:id="@+id/rb"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="22dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:contentDescription="@string/star"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressDrawable="@drawable/ic_custom_ratingbar_dm"
+            android:stepSize="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
-            app:srcCompat="@drawable/ic_star_filled" />
+            app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle" />
 
-        <ImageView
-            android:id="@+id/iv_item_movie_star_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="8dp"
-            android:contentDescription="@string/star"
-            app:layout_constraintStart_toEndOf="@id/iv_item_movie_star_1"
-            app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
-            app:srcCompat="@drawable/ic_star_filled" />
-
-        <ImageView
-            android:id="@+id/iv_item_movie_star_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="8dp"
-            android:contentDescription="@string/star"
-            app:layout_constraintStart_toEndOf="@id/iv_item_movie_star_2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
-            app:srcCompat="@drawable/ic_star_filled" />
-
-        <ImageView
-            android:id="@+id/iv_item_movie_star_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="8dp"
-            android:contentDescription="@string/star"
-            app:layout_constraintStart_toEndOf="@id/iv_item_movie_star_3"
-            app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
-            app:srcCompat="@drawable/ic_star_filled" />
-
-        <ImageView
-            android:id="@+id/iv_item_movie_star_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="8dp"
-            android:contentDescription="@string/star"
-            app:layout_constraintStart_toEndOf="@id/iv_item_movie_star_4"
-            app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
-            app:srcCompat="@drawable/ic_star" />
 
         <TextView
-            android:id="@+id/tv_movie_description"
+            android:id="@+id/tvMovieDescription"
             style="@style/fontStyle_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -146,11 +105,11 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_item_movie_star_1"
+            app:layout_constraintTop_toBottomOf="@+id/rb"
             tools:text="@string/movie_description" />
 
         <TextView
-            android:id="@+id/tv_actors"
+            android:id="@+id/tvActors"
             style="@style/fontStyle_1.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -159,7 +118,7 @@
             android:text="@string/actors"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_movie_description" />
+            app:layout_constraintTop_toBottomOf="@+id/tvMovieDescription" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvActorCard"
@@ -170,7 +129,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_actors"
+            app:layout_constraintTop_toBottomOf="@id/tvActors"
             tools:listitem="@layout/item_actor_card" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

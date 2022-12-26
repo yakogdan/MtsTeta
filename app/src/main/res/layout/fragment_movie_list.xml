@@ -8,7 +8,7 @@
     tools:context=".presentation.fragments.MovieListFragment">
 
     <ImageView
-        android:id="@+id/iv_search"
+        android:id="@+id/ivSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/ic_search" />
 
     <TextView
-        android:id="@+id/tv_heading_movie_list"
+        android:id="@+id/tvHeadingMovieList"
         style="@style/fontStyle_1.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,10 +28,10 @@
         android:text="@string/heading_movie_list"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_search" />
+        app:layout_constraintTop_toBottomOf="@+id/ivSearch" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_movie_genres"
+        android:id="@+id/rvMovieGenres"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -39,11 +39,11 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_heading_movie_list"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeadingMovieList"
         tools:listitem="@layout/item_movie_genres" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_movie_card"
+        android:id="@+id/rvMovieCard"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="18dp"
@@ -53,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_movie_genres"
+        app:layout_constraintTop_toBottomOf="@+id/rvMovieGenres"
         app:spanCount="2"
         tools:listitem="@layout/item_movie_card" />
 

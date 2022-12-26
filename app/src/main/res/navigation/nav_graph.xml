@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/profileFragment">
+    app:startDestination="@id/movieListFragment">
 
 
     <fragment
@@ -29,5 +29,6 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.yakogdan.mtsteta.presentation.fragments.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile"/>
 </navigation>

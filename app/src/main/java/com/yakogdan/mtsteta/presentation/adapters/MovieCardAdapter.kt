@@ -26,7 +26,8 @@ class MovieCardAdapter(
                 tvItemMovieTitle.text = movieCard.title
                 tvItemMovieDescription.text = movieCard.description
                 val ageRestriction = movieCard.ageRestriction.toString() + "+"
-                tvItemMovieAgeLimit.text = ageRestriction
+                tvAgeLimit.text = ageRestriction
+                rbMovie.rating = movieCard.rateScore.toFloat()
                 root.setOnClickListener {
                     onItemClickListener(movieCard)
                 }
