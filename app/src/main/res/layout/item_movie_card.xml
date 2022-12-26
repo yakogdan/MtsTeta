@@ -85,7 +85,7 @@
 
 
     <TextView
-        android:id="@+id/tvAgeLimit"
+        android:id="@+id/tvAgeRestriction"
         style="@style/fontStyle_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

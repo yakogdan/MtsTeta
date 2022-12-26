@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import com.yakogdan.mtsteta.R
 import com.yakogdan.mtsteta.databinding.FragmentMovieListBinding
 import com.yakogdan.mtsteta.presentation.adapters.MovieCardAdapter
 import com.yakogdan.mtsteta.presentation.adapters.MovieGenresAdapter
@@ -20,6 +23,8 @@ class MovieListFragment : Fragment() {
 
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
+
+    private val navController by lazy { view?.findNavController() }
 
     private val viewModel by viewModels<MovieListViewModel>()
 
@@ -64,11 +69,10 @@ class MovieListFragment : Fragment() {
         )
         movieCardAdapter = MovieCardAdapter(
             onItemClickListener = { movieCard ->
-                Toast.makeText(
-                    context,
-                    movieCard.title,
-                    Toast.LENGTH_SHORT
-                ).show()
+                navController?.navigate(
+                    R.id.action_movieListFragment_to_movieDetailsFragment,
+                    bundleOf("movieCard" to movieCard)
+                )
             }
         )
         binding.apply {
