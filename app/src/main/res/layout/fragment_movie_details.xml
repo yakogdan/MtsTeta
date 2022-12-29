@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -44,24 +45,11 @@
             android:background="@drawable/bg_age_limit"
             android:padding="10dp"
             android:textSize="13.8sp"
-            app:layout_constraintBottom_toBottomOf="@+id/rb"
+            app:layout_constraintBottom_toBottomOf="@+id/tvDate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvMovieTitle"
             tools:ignore="SmallSp"
             tools:text="18+" />
-
-        <TextView
-            android:id="@+id/tvDate"
-            style="@style/fontStyle_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvGenresDM"
-            tools:ignore="SmallSp"
-            tools:text="22.04.2021" />
 
 
         <TextView
@@ -73,22 +61,38 @@
             android:layout_marginTop="14dp"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDate"
+            app:layout_constraintTop_toBottomOf="@+id/rvGenresDM"
             tools:text="@string/wrath_of_man_title" />
 
         <RatingBar
             android:id="@+id/rb"
             android:layout_width="wrap_content"
             android:layout_height="16dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="7dp"
             android:isIndicator="true"
             android:numStars="5"
             android:progressDrawable="@drawable/ic_custom_ratingbar_dm"
             android:stepSize="1"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvDate"
+            app:layout_constraintStart_toStartOf="@+id/tvDate"
             app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle" />
 
+        <TextView
+            android:id="@+id/tvDate"
+            style="@style/fontStyle_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_movie_genres"
+            android:paddingHorizontal="9dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="3dp"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rb"
+            tools:ignore="SmallSp"
+            tools:text="22.04.2021" />
 
         <TextView
             android:id="@+id/tvMovieDescription"
@@ -101,7 +105,7 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rb"
+            app:layout_constraintTop_toBottomOf="@+id/tvDate"
             tools:text="@string/movie_description" />
 
         <TextView
@@ -117,7 +121,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvMovieDescription" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvActorCard"
+            android:id="@+id/rvFavoriteGenres"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
