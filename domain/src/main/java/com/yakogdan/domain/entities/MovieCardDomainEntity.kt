@@ -1,9 +1,12 @@
 package com.yakogdan.domain.entities
 
+import java.io.Serializable
+
 class MovieCardDomainEntity(
+    val id: Long,
     val title: String,
     val description: String,
-    val rateScore: Int,
+    val rateScore: Double,
     val ageRestriction: Int,
-    val imageUrl: String
-) : java.io.Serializable
+    val posterUrl: String
+) : Serializable

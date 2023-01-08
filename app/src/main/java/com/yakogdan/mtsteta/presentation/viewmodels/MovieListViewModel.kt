@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yakogdan.domain.entities.MovieCardDomainEntity
-import com.yakogdan.domain.entities.MovieGenresDomainEntity
+import com.yakogdan.domain.entities.MovieGenreDomainEntity
 import com.yakogdan.domain.interactors.MovieListInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,13 +21,13 @@ class MovieListViewModel @Inject constructor(
     private val _movieCardLiveData = MutableLiveData<List<MovieCardDomainEntity>>()
     val movieCardLiveData: LiveData<List<MovieCardDomainEntity>> get() = _movieCardLiveData
 
-    private val _movieGenresLiveData = MutableLiveData<List<MovieGenresDomainEntity>>()
-    val movieGenresLiveData: LiveData<List<MovieGenresDomainEntity>> get() = _movieGenresLiveData
+    private val _movieGenresLiveData = MutableLiveData<List<MovieGenreDomainEntity>>()
+    val movieGenresLiveData: LiveData<List<MovieGenreDomainEntity>> get() = _movieGenresLiveData
 
 
-    fun getMovieCards() {
+    fun getMovieCardsFromRepo() {
         viewModelScope.launch(Dispatchers.IO) {
-            movieListInteractor.getMovieCards().collect() {
+            movieListInteractor.getMovieCardsFromRepo().collect() {
                 withContext(Dispatchers.Main) {
                     _movieCardLiveData.value = it
                 }
@@ -35,9 +35,29 @@ class MovieListViewModel @Inject constructor(
         }
     }
 
-    fun getMovieGenres() {
+    fun getMovieCardsFromDB() {
         viewModelScope.launch(Dispatchers.IO) {
-            movieListInteractor.getMovieGenres().collect() {
+            movieListInteractor.getMovieCardsFromDB().collect() {
+                withContext(Dispatchers.Main) {
+                    _movieCardLiveData.value = it
+                }
+            }
+        }
+    }
+
+    fun getMovieGenresFromRepo() {
+        viewModelScope.launch(Dispatchers.IO) {
+            movieListInteractor.getMovieGenresFromRepo().collect() {
+                withContext(Dispatchers.Main) {
+                    _movieGenresLiveData.value = it
+                }
+            }
+        }
+    }
+
+    fun getMovieGenresFromDB() {
+        viewModelScope.launch(Dispatchers.IO) {
+            movieListInteractor.getMovieGenresFromDB().collect() {
                 withContext(Dispatchers.Main) {
                     _movieGenresLiveData.value = it
                 }

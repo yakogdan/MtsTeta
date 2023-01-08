@@ -6,18 +6,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.yakogdan.domain.entities.MovieGenresDomainEntity
+import com.yakogdan.domain.entities.MovieGenreDomainEntity
 import com.yakogdan.mtsteta.R
 import com.yakogdan.mtsteta.databinding.ItemMovieGenresBinding
 
 class MovieGenresAdapter(
-    private var onItemClickListener: (MovieGenresDomainEntity) -> Unit
+    private var onItemClickListener: (MovieGenreDomainEntity) -> Unit
 ) : RecyclerView.Adapter<MovieGenresAdapter.MovieGenresViewHolder>() {
 
     inner class MovieGenresViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemMovieGenresBinding.bind(view)
 
-        fun bind(movieGenres: MovieGenresDomainEntity) {
+        fun bind(movieGenres: MovieGenreDomainEntity) {
             binding.apply {
                 tvMovieGenres.text = movieGenres.title
                 root.setOnClickListener {
@@ -27,17 +27,17 @@ class MovieGenresAdapter(
         }
     }
 
-    private val callback = object : DiffUtil.ItemCallback<MovieGenresDomainEntity>() {
+    private val callback = object : DiffUtil.ItemCallback<MovieGenreDomainEntity>() {
         override fun areItemsTheSame(
-            oldItem: MovieGenresDomainEntity,
-            newItem: MovieGenresDomainEntity
+            oldItem: MovieGenreDomainEntity,
+            newItem: MovieGenreDomainEntity
         ): Boolean {
             return oldItem.title == newItem.title
         }
 
         override fun areContentsTheSame(
-            oldItem: MovieGenresDomainEntity,
-            newItem: MovieGenresDomainEntity
+            oldItem: MovieGenreDomainEntity,
+            newItem: MovieGenreDomainEntity
         ): Boolean {
             return oldItem == newItem
         }
@@ -45,7 +45,7 @@ class MovieGenresAdapter(
 
     private val differ = AsyncListDiffer(this, callback)
 
-    fun setData(movieGenres: List<MovieGenresDomainEntity>) {
+    fun setData(movieGenres: List<MovieGenreDomainEntity>) {
         differ.submitList(movieGenres)
     }
 

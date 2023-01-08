@@ -22,7 +22,7 @@ class MovieCardAdapter(
 
         fun bind(movieCard: MovieCardDomainEntity) {
             binding.apply {
-                ivItemMoviePoster.load(movieCard.imageUrl)
+                ivItemMoviePoster.load(movieCard.posterUrl)
                 tvItemMovieTitle.text = movieCard.title
                 tvItemMovieDescription.text = movieCard.description
                 val ageRestriction = movieCard.ageRestriction.toString() + "+"

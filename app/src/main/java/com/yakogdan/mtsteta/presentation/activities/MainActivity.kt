@@ -3,6 +3,7 @@ package com.yakogdan.mtsteta.presentation.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.yakogdan.mtsteta.R
+import com.yakogdan.mtsteta.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

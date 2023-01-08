@@ -1,6 +1,7 @@
 package com.yakogdan.mtsteta.presentation.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,8 +44,10 @@ class MovieListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.apply {
-            getMovieGenres()
-            getMovieCards()
+            val movieCards = getMovieGenresFromDB()
+            Log.d("myTAG", "movieCards = $movieCards")
+            val movieGenres = getMovieCardsFromDB()
+            Log.d("myTAG", "movieGenres = $movieGenres")
         }
         initAdapters()
 

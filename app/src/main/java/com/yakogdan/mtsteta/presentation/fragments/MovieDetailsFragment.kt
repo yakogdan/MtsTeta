@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import coil.load
-import com.yakogdan.domain.entities.MovieGenresDomainEntity
+import com.yakogdan.domain.entities.MovieGenreDomainEntity
 import com.yakogdan.mtsteta.databinding.FragmentMovieDetailsBinding
 import com.yakogdan.mtsteta.presentation.adapters.MovieGenresAdapter
 import com.yakogdan.mtsteta.presentation.itemdecoration.MovieGenresItemDecoration
@@ -44,14 +44,14 @@ class MovieDetailsFragment : Fragment() {
                 rb.rating = movieCard.rateScore.toFloat()
                 val ageRestriction = movieCard.ageRestriction.toString() + "+"
                 tvAgeRestriction.text = ageRestriction
-                ivMoviePoster.load(movieCard.imageUrl)
+                ivMoviePoster.load(movieCard.posterUrl)
             }
         }
         initAdapter()
         movieGenresAdapter.setData(
             listOf(
-                MovieGenresDomainEntity(title = "боевик"),
-                MovieGenresDomainEntity(title = "комедия")
+                MovieGenreDomainEntity(id = 0, title = "боевик"),
+                MovieGenreDomainEntity(id = 1, title = "комедия")
             )
         )
     }
