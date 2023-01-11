@@ -1,7 +1,6 @@
 package com.yakogdan.mtsteta.presentation.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,12 +42,20 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.apply {
-            val movieCards = getMovieGenresFromDB()
-            Log.d("myTAG", "movieCards = $movieCards")
-            val movieGenres = getMovieCardsFromDB()
-            Log.d("myTAG", "movieGenres = $movieGenres")
-        }
+//        if (viewModel.movieCardDbIsEmpty()) {
+//            Log.d("myTAG", "dbIsEmpty = true")
+//            Toast.makeText(context, "repo", Toast.LENGTH_SHORT).show()
+//            viewModel.getMovieCardsFromRepo()
+//            viewModel.movieCardLiveData.observe(viewLifecycleOwner) { movieCards ->
+//                viewModel.addMovieCards(movieCards)
+//            }
+//        } else {
+//            Log.d("myTAG", "dbIsEmpty = false")
+//            Toast.makeText(context, "db", Toast.LENGTH_SHORT).show()
+//            viewModel.getMovieCardsFromDB()
+//        }
+        viewModel.getMovieCards()
+        viewModel.getMovieGenres()
         initAdapters()
 
         viewModel.movieCardLiveData.observe(viewLifecycleOwner) { movieCards ->
@@ -60,7 +67,6 @@ class MovieListFragment : Fragment() {
     }
 
     private fun initAdapters() {
-
         movieGenresAdapter = MovieGenresAdapter(
             onItemClickListener = { movieGenres ->
                 Toast.makeText(

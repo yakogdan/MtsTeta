@@ -12,29 +12,68 @@ class MovieListInteractor @Inject constructor(
 
     // MovieCard
 
-    suspend fun getMovieCardsFromRepo(): Flow<List<MovieCardDomainEntity>> =
+    private suspend fun getMovieCardsFromRepo(): Flow<List<MovieCardDomainEntity>> =
         movieListRepository.getMovieCardsFromRepo()
 
-    suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomainEntity>> =
+    private suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomainEntity>> =
         movieListRepository.getMovieCardsFromDB()
 
-    suspend fun addMovieCard(movieCard: MovieCardDomainEntity) =
-        movieListRepository.addMovieCard(movieCard)
+    suspend fun getMovieCards(): Flow<List<MovieCardDomainEntity>> {
+        return if (movieCardsDbIsEmpty()) {
+            getMovieCardsFromRepo().collect {
+                addMovieCards(it)
+            }
+            getMovieCardsFromRepo()
 
-    suspend fun addMovieCards(movieCards: List<MovieCardDomainEntity>) =
+        } else {
+            getMovieCardsFromDB()
+        }
+    }
+
+//    suspend fun addMovieCard(movieCard: MovieCardDomainEntity) =
+//        movieListRepository.addMovieCard(movieCard)
+
+    private suspend fun addMovieCards(movieCards: List<MovieCardDomainEntity>) =
         movieListRepository.addMovieCards(movieCards)
+
+//    suspend fun clearMovieCardsDB() {
+//        movieListRepository.clearMovieCardsDB()
+//    }
+
+    private suspend fun movieCardsDbIsEmpty(): Boolean {
+        return movieListRepository.movieCardsDbIsEmpty()
+    }
 
     // MovieGenre
 
-    suspend fun getMovieGenresFromRepo(): Flow<List<MovieGenreDomainEntity>> =
+    private suspend fun getMovieGenresFromRepo(): Flow<List<MovieGenreDomainEntity>> =
         movieListRepository.getMovieGenresFromRepo()
 
-    suspend fun getMovieGenresFromDB(): Flow<List<MovieGenreDomainEntity>> =
+    private suspend fun getMovieGenresFromDB(): Flow<List<MovieGenreDomainEntity>> =
         movieListRepository.getMovieGenresFromDB()
 
-    suspend fun addMovieGenre(movieGenre: MovieGenreDomainEntity) =
-        movieListRepository.addMovieGenre(movieGenre)
+    suspend fun getMovieGenres(): Flow<List<MovieGenreDomainEntity>> {
+        return if (movieGenresDbIsEmpty()) {
+            getMovieGenresFromRepo().collect {
+                addMovieGenres(it)
+            }
+            getMovieGenresFromRepo()
+        } else {
+            getMovieGenresFromDB()
+        }
+    }
 
-    suspend fun addMovieGenres(movieGenres: List<MovieGenreDomainEntity>) =
+//    suspend fun addMovieGenre(movieGenre: MovieGenreDomainEntity) =
+//        movieListRepository.addMovieGenre(movieGenre)
+
+    private suspend fun addMovieGenres(movieGenres: List<MovieGenreDomainEntity>) =
         movieListRepository.addMovieGenres(movieGenres)
+
+//    suspend fun clearMovieGenresDB() {
+//        movieListRepository.clearMovieGenresDB()
+//    }
+
+    private suspend fun movieGenresDbIsEmpty(): Boolean {
+        return movieListRepository.movieGenresDbIsEmpty()
+    }
 }

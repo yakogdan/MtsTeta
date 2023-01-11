@@ -16,6 +16,10 @@ interface MovieListRepository {
 
     suspend fun addMovieCards(movieCards: List<MovieCardDomainEntity>)
 
+    suspend fun clearMovieCardsDB()
+
+    suspend fun movieCardsDbIsEmpty(): Boolean
+
     // MovieGenre
 
     suspend fun getMovieGenresFromRepo(): Flow<List<MovieGenreDomainEntity>>
@@ -25,4 +29,8 @@ interface MovieListRepository {
     suspend fun addMovieGenre(movieGenre: MovieGenreDomainEntity)
 
     suspend fun addMovieGenres(movieGenres: List<MovieGenreDomainEntity>)
+
+    suspend fun clearMovieGenresDB()
+
+    suspend fun movieGenresDbIsEmpty(): Boolean
 }

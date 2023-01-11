@@ -25,15 +25,18 @@ object MovieCardMapper {
             posterUrl = movieCardDomainEntity.posterUrl
         )
 
-    fun mapDomainToDbWithoutId(movieCardDomainEntity: MovieCardDomainEntity): MovieCardDbEntity =
-        MovieCardDbEntity(
-            title = movieCardDomainEntity.title,
-            description = movieCardDomainEntity.description,
-            rateScore = movieCardDomainEntity.rateScore,
-            ageRestriction = movieCardDomainEntity.ageRestriction,
-            posterUrl = movieCardDomainEntity.posterUrl
-        )
+//    fun mapDomainToDbWithoutId(movieCardDomainEntity: MovieCardDomainEntity): MovieCardDbEntity =
+//        MovieCardDbEntity(
+//            title = movieCardDomainEntity.title,
+//            description = movieCardDomainEntity.description,
+//            rateScore = movieCardDomainEntity.rateScore,
+//            ageRestriction = movieCardDomainEntity.ageRestriction,
+//            posterUrl = movieCardDomainEntity.posterUrl
+//        )
 
-    fun mapDomainToDbWithoutIdList(items: List<MovieCardDomainEntity>): List<MovieCardDbEntity> =
-        items.map(::mapDomainToDbWithoutId)
+    fun mapDomainToDbList(items: List<MovieCardDomainEntity>): List<MovieCardDbEntity> =
+        items.map(::mapDomainToDb)
+
+//    fun mapDomainToDbWithoutIdList(items: List<MovieCardDomainEntity>): List<MovieCardDbEntity> =
+//        items.map(::mapDomainToDbWithoutId)
 }

@@ -95,12 +95,20 @@ class MovieListRepoImpl @Inject constructor(
     }
 
     override suspend fun addMovieCard(movieCard: MovieCardDomainEntity) {
-        movieCardDao.addMovieCard(MovieCardMapper.mapDomainToDbWithoutId(movieCard))
+        movieCardDao.addMovieCard(MovieCardMapper.mapDomainToDb(movieCard))
     }
 
     override suspend fun addMovieCards(movieCards: List<MovieCardDomainEntity>) {
-        movieCardDao.addMovieCards(MovieCardMapper.mapDomainToDbWithoutIdList(movieCards))
+        movieCardDao.addMovieCards(MovieCardMapper.mapDomainToDbList(movieCards))
     }
+
+    override suspend fun clearMovieCardsDB() {
+        movieCardDao.clearAllDB()
+    }
+
+    override suspend fun movieCardsDbIsEmpty() =
+        movieCardDao.isEmpty()
+
 
     // MovieGenre
 
@@ -123,10 +131,18 @@ class MovieListRepoImpl @Inject constructor(
     }
 
     override suspend fun addMovieGenre(movieGenre: MovieGenreDomainEntity) {
-        movieGenreDao.addMovieGenre(MovieGenreMapper.mapDomainToDbDbWithoutId(movieGenre))
+        movieGenreDao.addMovieGenre(MovieGenreMapper.mapDomainToDb(movieGenre))
     }
 
     override suspend fun addMovieGenres(movieGenres: List<MovieGenreDomainEntity>) {
-        movieGenreDao.addMovieGenres(MovieGenreMapper.mapDomainToDbWithoutIdList(movieGenres))
+        movieGenreDao.addMovieGenres(MovieGenreMapper.mapDomainToDbList(movieGenres))
     }
+
+    override suspend fun clearMovieGenresDB() {
+        movieGenreDao.clearAllDB()
+    }
+
+    override suspend fun movieGenresDbIsEmpty() =
+        movieGenreDao.isEmpty()
+
 }

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.yakogdan.domain.entities.MovieGenresDomainEntity
+import com.yakogdan.domain.entities.MovieGenreDomainEntity
 import com.yakogdan.mtsteta.databinding.FragmentProfileBinding
 import com.yakogdan.mtsteta.presentation.adapters.MovieGenresAdapter
 import com.yakogdan.mtsteta.presentation.itemdecoration.MovieGenresItemDecoration
@@ -35,8 +35,8 @@ class ProfileFragment : Fragment() {
         initAdapter()
         movieGenresAdapter.setData(
             listOf(
-                MovieGenresDomainEntity(title = "боевик"),
-                MovieGenresDomainEntity(title = "комедия")
+                MovieGenreDomainEntity(id = 0, title = "боевик"),
+                MovieGenreDomainEntity(id = 1, title = "комедия")
             )
         )
         with(binding) {

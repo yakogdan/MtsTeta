@@ -21,5 +21,8 @@ interface MovieCardDao {
     suspend fun addMovieCard(movieCard: MovieCardDbEntity)
 
     @Query("DELETE FROM $TABLE_NAME")
-    suspend fun clearAllDb()
+    suspend fun clearAllDB()
+
+    @Query("SELECT (SELECT COUNT(*) FROM $TABLE_NAME) == 0")
+    suspend fun isEmpty(): Boolean
 }

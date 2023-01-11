@@ -16,11 +16,6 @@ object MovieGenreMapper {
             title = movieGenreDomainEntity.title
         )
 
-    fun mapDomainToDbDbWithoutId(movieGenreDomainEntity: MovieGenreDomainEntity): MovieGenreDbEntity =
-        MovieGenreDbEntity(
-            title = movieGenreDomainEntity.title
-        )
-
-    fun mapDomainToDbWithoutIdList(items: List<MovieGenreDomainEntity>): List<MovieGenreDbEntity> =
-        items.map(MovieGenreMapper::mapDomainToDbDbWithoutId)
+    fun mapDomainToDbList(items: List<MovieGenreDomainEntity>): List<MovieGenreDbEntity> =
+        items.map(MovieGenreMapper::mapDomainToDb)
 }
