@@ -1,11 +1,12 @@
 package com.yakogdan.mtsteta.presentation.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yakogdan.domain.entities.MovieCardDomainEntity
-import com.yakogdan.domain.entities.MovieGenreDomainEntity
+import com.yakogdan.domain.entities.MovieCardDomain
+import com.yakogdan.domain.entities.MovieGenreDomain
 import com.yakogdan.domain.interactors.MovieListInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,12 +21,36 @@ class MovieListViewModel @Inject constructor(
 
     // MovieCard
 
-    val movieCardLiveData: LiveData<List<MovieCardDomainEntity>> get() = _movieCardLiveData
-    private val _movieCardLiveData = MutableLiveData<List<MovieCardDomainEntity>>()
+    private val _movieCardLiveData = MutableLiveData<List<MovieCardDomain>>()
+    val movieCardLiveData: LiveData<List<MovieCardDomain>> get() = _movieCardLiveData
 
-    fun getMovieCards() {
+//    fun getMovieCards() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            movieListInteractor.getMovieCards().collect {
+//                withContext(Dispatchers.Main) {
+//                    _movieCardLiveData.value = it
+//                }
+//            }
+//        }
+//    }
+
+    fun getMovieCardsFromApi() {
         viewModelScope.launch(Dispatchers.IO) {
-            movieListInteractor.getMovieCards().collect {
+            try {
+                movieListInteractor.getMovieCardsFromApi().collect() {
+                    withContext(Dispatchers.Main) {
+                        _movieCardLiveData.value = it
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("eTAG", "getMovieCardsFromApi: не работает ниче")
+            }
+        }
+    }
+
+    fun getMovieCardsFromDB() {
+        viewModelScope.launch(Dispatchers.IO) {
+            movieListInteractor.getMovieCardsFromDB().collect {
                 withContext(Dispatchers.Main) {
                     _movieCardLiveData.value = it
                 }
@@ -33,32 +58,6 @@ class MovieListViewModel @Inject constructor(
         }
     }
 
-//    fun getMovieCardsFromRepo() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.getMovieCardsFromRepo().collect {
-//                withContext(Dispatchers.Main) {
-//                    _movieCardLiveData.value = it
-//                }
-//            }
-//        }
-//    }
-//
-//    fun getMovieCardsFromDB() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.getMovieCardsFromDB().collect {
-//                withContext(Dispatchers.Main) {
-//                    _movieCardLiveData.value = it
-//                }
-//            }
-//        }
-//    }
-//
-//    fun addMovieCard(movieCard: MovieCardDomainEntity) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.addMovieCard(movieCard)
-//        }
-//    }
-//
 //    fun addMovieCards(movieCards: List<MovieCardDomainEntity>) {
 //        viewModelScope.launch(Dispatchers.IO) {
 //            movieListInteractor.addMovieCards(movieCards)
@@ -73,8 +72,8 @@ class MovieListViewModel @Inject constructor(
 
     // MovieGenre
 
-    private val _movieGenresLiveData = MutableLiveData<List<MovieGenreDomainEntity>>()
-    val movieGenresLiveData: LiveData<List<MovieGenreDomainEntity>> get() = _movieGenresLiveData
+    private val _movieGenresLiveData = MutableLiveData<List<MovieGenreDomain>>()
+    val movieGenresLiveData: LiveData<List<MovieGenreDomain>> get() = _movieGenresLiveData
 
     fun getMovieGenres() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -85,16 +84,7 @@ class MovieListViewModel @Inject constructor(
             }
         }
     }
-//    fun getMovieGenresFromRepo() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.getMovieGenresFromRepo().collect {
-//                withContext(Dispatchers.Main) {
-//                    _movieGenresLiveData.value = it
-//                }
-//            }
-//        }
-//    }
-//
+
 //    fun getMovieGenresFromDB() {
 //        viewModelScope.launch(Dispatchers.IO) {
 //            movieListInteractor.getMovieGenresFromDB().collect {
@@ -102,12 +92,6 @@ class MovieListViewModel @Inject constructor(
 //                    _movieGenresLiveData.value = it
 //                }
 //            }
-//        }
-//    }
-//
-//    suspend fun addMovieGenre(movieGenre: MovieGenreDomainEntity) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.addMovieGenre(movieGenre)
 //        }
 //    }
 //

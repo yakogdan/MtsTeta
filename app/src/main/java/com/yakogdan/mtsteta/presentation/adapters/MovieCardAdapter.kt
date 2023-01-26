@@ -8,26 +8,26 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.yakogdan.domain.entities.MovieCardDomainEntity
+import com.yakogdan.domain.entities.MovieCardDomain
 import com.yakogdan.mtsteta.R
 import com.yakogdan.mtsteta.databinding.ItemMovieCardBinding
 
 class MovieCardAdapter(
-    private var onItemClickListener: (MovieCardDomainEntity) -> Unit
+    private var onItemClickListener: (MovieCardDomain) -> Unit
 ) : RecyclerView.Adapter<MovieCardAdapter.MovieCardViewHolder>() {
 
     inner class MovieCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val binding = ItemMovieCardBinding.bind(view)
 
-        fun bind(movieCard: MovieCardDomainEntity) {
+        fun bind(movieCard: MovieCardDomain) {
             binding.apply {
-                ivItemMoviePoster.load(movieCard.posterUrl)
+                ivItemMoviePoster.load("https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + movieCard.posterUrl)
                 tvItemMovieTitle.text = movieCard.title
                 tvItemMovieDescription.text = movieCard.description
                 val ageRestriction = movieCard.ageRestriction.toString() + "+"
                 tvAgeRestriction.text = ageRestriction
-                rbMovie.rating = movieCard.rateScore.toFloat()
+                rbMovie.rating = movieCard.rateScore.toFloat()/2
                 root.setOnClickListener {
                     onItemClickListener(movieCard)
                 }
@@ -35,18 +35,18 @@ class MovieCardAdapter(
         }
     }
 
-    private val callback = object : DiffUtil.ItemCallback<MovieCardDomainEntity>() {
+    private val callback = object : DiffUtil.ItemCallback<MovieCardDomain>() {
         override fun areItemsTheSame(
-            oldItem: MovieCardDomainEntity,
-            newItem: MovieCardDomainEntity
+            oldItem: MovieCardDomain,
+            newItem: MovieCardDomain
         ): Boolean {
             return oldItem.title == newItem.title
         }
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(
-            oldItem: MovieCardDomainEntity,
-            newItem: MovieCardDomainEntity
+            oldItem: MovieCardDomain,
+            newItem: MovieCardDomain
         ): Boolean {
             return oldItem == newItem
         }
@@ -54,7 +54,7 @@ class MovieCardAdapter(
 
     private val differ = AsyncListDiffer(this, callback)
 
-    fun setData(movieCards: List<MovieCardDomainEntity>) {
+    fun setData(movieCards: List<MovieCardDomain>) {
         differ.submitList(movieCards)
     }
 

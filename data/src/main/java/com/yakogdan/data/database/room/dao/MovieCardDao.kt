@@ -4,21 +4,21 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.yakogdan.data.database.room.entities.MovieCardDbEntity
-import com.yakogdan.data.database.room.entities.MovieCardDbEntity.Companion.TABLE_NAME
+import com.yakogdan.data.database.room.entities.MovieCardDb
+import com.yakogdan.data.database.room.entities.MovieCardDb.Companion.TABLE_NAME
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieCardDao {
 
     @Query("SELECT * FROM $TABLE_NAME")
-    fun getMovieCards(): Flow<List<MovieCardDbEntity>>
+    fun getMovieCards(): Flow<List<MovieCardDb>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addMovieCards(movieCards: List<MovieCardDbEntity>)
+    suspend fun addMovieCards(movieCards: List<MovieCardDb>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addMovieCard(movieCard: MovieCardDbEntity)
+    suspend fun addMovieCard(movieCard: MovieCardDb)
 
     @Query("DELETE FROM $TABLE_NAME")
     suspend fun clearAllDB()

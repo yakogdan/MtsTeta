@@ -42,20 +42,9 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        if (viewModel.movieCardDbIsEmpty()) {
-//            Log.d("myTAG", "dbIsEmpty = true")
-//            Toast.makeText(context, "repo", Toast.LENGTH_SHORT).show()
-//            viewModel.getMovieCardsFromRepo()
-//            viewModel.movieCardLiveData.observe(viewLifecycleOwner) { movieCards ->
-//                viewModel.addMovieCards(movieCards)
-//            }
-//        } else {
-//            Log.d("myTAG", "dbIsEmpty = false")
-//            Toast.makeText(context, "db", Toast.LENGTH_SHORT).show()
-//            viewModel.getMovieCardsFromDB()
-//        }
-        viewModel.getMovieCards()
         viewModel.getMovieGenres()
+        viewModel.getMovieCardsFromDB()
+        viewModel.getMovieCardsFromApi()
         initAdapters()
 
         viewModel.movieCardLiveData.observe(viewLifecycleOwner) { movieCards ->

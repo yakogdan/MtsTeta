@@ -1,20 +1,24 @@
 package com.yakogdan.domain.repositories
 
-import com.yakogdan.domain.entities.MovieCardDomainEntity
-import com.yakogdan.domain.entities.MovieGenreDomainEntity
+import com.yakogdan.domain.entities.MovieCardDomain
+import com.yakogdan.domain.entities.MovieGenreDomain
+import com.yakogdan.domain.entities.moviedetail.MovieDetailDomain
+import com.yakogdan.domain.entities.popularmovies.PopularMoviesDomain
 import kotlinx.coroutines.flow.Flow
 
 interface MovieListRepository {
 
     // MovieCard
 
-    suspend fun getMovieCardsFromRepo(): Flow<List<MovieCardDomainEntity>>
+    suspend fun getPopularMovieApi(): PopularMoviesDomain
 
-    suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomainEntity>>
+    suspend fun getMovieDetailsApi(movieId: Long): Flow<MovieDetailDomain>
 
-    suspend fun addMovieCard(movieCard: MovieCardDomainEntity)
+    suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>>
 
-    suspend fun addMovieCards(movieCards: List<MovieCardDomainEntity>)
+    suspend fun getMovieCardsFromApi(): Flow<List<MovieCardDomain>>
+
+    suspend fun addMovieCards(movieCards: List<MovieCardDomain>)
 
     suspend fun clearMovieCardsDB()
 
@@ -22,13 +26,13 @@ interface MovieListRepository {
 
     // MovieGenre
 
-    suspend fun getMovieGenresFromRepo(): Flow<List<MovieGenreDomainEntity>>
+    suspend fun getMovieGenresFromRepo(): Flow<List<MovieGenreDomain>>
 
-    suspend fun getMovieGenresFromDB(): Flow<List<MovieGenreDomainEntity>>
+    suspend fun getMovieGenresFromDB(): Flow<List<MovieGenreDomain>>
 
-    suspend fun addMovieGenre(movieGenre: MovieGenreDomainEntity)
+    suspend fun addMovieGenre(movieGenre: MovieGenreDomain)
 
-    suspend fun addMovieGenres(movieGenres: List<MovieGenreDomainEntity>)
+    suspend fun addMovieGenres(movieGenres: List<MovieGenreDomain>)
 
     suspend fun clearMovieGenresDB()
 

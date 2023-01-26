@@ -2,7 +2,7 @@ package com.yakogdan.domain.entities
 
 import java.io.Serializable
 
-data class MovieGenreDomainEntity(
+data class MovieGenreDomain(
     val id: Long,
     val title: String
 ) : Serializable

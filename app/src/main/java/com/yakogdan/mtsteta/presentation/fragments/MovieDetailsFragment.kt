@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
-import com.yakogdan.domain.entities.MovieGenreDomainEntity
 import com.yakogdan.mtsteta.databinding.FragmentMovieDetailsBinding
 import com.yakogdan.mtsteta.presentation.adapters.MovieGenresAdapter
 import com.yakogdan.mtsteta.presentation.itemdecoration.MovieGenresItemDecoration
+import com.yakogdan.mtsteta.presentation.viewmodels.MovieDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +22,8 @@ class MovieDetailsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val bundleArgs: MovieDetailsFragmentArgs by navArgs()
+
+    private val viewModel by viewModels<MovieDetailsViewModel>()
 
     private lateinit var movieGenresAdapter: MovieGenresAdapter
 
@@ -35,27 +38,22 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initAdapter()
         bundleArgs.movieCard?.let { movieCard ->
-            with(binding) {
-                tvMovieTitle.text = movieCard.title
-                val date = "22.11.2022"
-                tvDate.text = date
-                tvMovieDescription.text = movieCard.description
-                rb.rating = movieCard.rateScore.toFloat()
-                val ageRestriction = movieCard.ageRestriction.toString() + "+"
-                tvAgeRestriction.text = ageRestriction
-                ivMoviePoster.load(movieCard.posterUrl)
+            viewModel.getMovieDetailFromApi(movieCard.id)
+            viewModel.movieDetailLiveData.observe(viewLifecycleOwner) { movieDetails ->
+                movieGenresAdapter.setData(movieDetails.genres)
+                with(binding) {
+                    tvMovieTitle.text = movieDetails.title
+                    tvDate.text = movieDetails.release_date
+                    tvMovieDescription.text = movieDetails.overview
+                    rb.rating = movieDetails.vote_average.toFloat()
+                    tvAgeRestriction.text = getAgeRestriction(movieDetails.adult)
+                    ivMoviePoster.load("https://www.themoviedb.org/t/p/w1000_and_h450_multi_faces" + movieCard.posterUrl)
+                }
             }
         }
-        initAdapter()
-        movieGenresAdapter.setData(
-            listOf(
-                MovieGenreDomainEntity(id = 0, title = "боевик"),
-                MovieGenreDomainEntity(id = 1, title = "комедия")
-            )
-        )
     }
-
 
     private fun initAdapter() {
         movieGenresAdapter = MovieGenresAdapter(
@@ -79,4 +77,11 @@ class MovieDetailsFragment : Fragment() {
             }
         }
     }
+
+    private fun getAgeRestriction(adult: Boolean): String =
+        if (adult) {
+            "18+"
+        } else {
+            "12+"
+        }
 }

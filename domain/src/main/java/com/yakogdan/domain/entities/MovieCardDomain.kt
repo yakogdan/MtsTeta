@@ -2,8 +2,8 @@ package com.yakogdan.domain.entities
 
 import java.io.Serializable
 
-class MovieCardDomainEntity(
-    val id: Long,
+class MovieCardDomain(
+    val id: Long = 0,
     val title: String,
     val description: String,
     val rateScore: Double,

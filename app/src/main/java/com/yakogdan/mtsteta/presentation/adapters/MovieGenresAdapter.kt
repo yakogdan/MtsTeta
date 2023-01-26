@@ -6,18 +6,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.yakogdan.domain.entities.MovieGenreDomainEntity
+import com.yakogdan.domain.entities.MovieGenreDomain
 import com.yakogdan.mtsteta.R
 import com.yakogdan.mtsteta.databinding.ItemMovieGenresBinding
 
 class MovieGenresAdapter(
-    private var onItemClickListener: (MovieGenreDomainEntity) -> Unit
+    private var onItemClickListener: (MovieGenreDomain) -> Unit
 ) : RecyclerView.Adapter<MovieGenresAdapter.MovieGenresViewHolder>() {
 
     inner class MovieGenresViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemMovieGenresBinding.bind(view)
 
-        fun bind(movieGenres: MovieGenreDomainEntity) {
+        fun bind(movieGenres: MovieGenreDomain) {
             binding.apply {
                 tvMovieGenres.text = movieGenres.title
                 root.setOnClickListener {
@@ -27,17 +27,17 @@ class MovieGenresAdapter(
         }
     }
 
-    private val callback = object : DiffUtil.ItemCallback<MovieGenreDomainEntity>() {
+    private val callback = object : DiffUtil.ItemCallback<MovieGenreDomain>() {
         override fun areItemsTheSame(
-            oldItem: MovieGenreDomainEntity,
-            newItem: MovieGenreDomainEntity
+            oldItem: MovieGenreDomain,
+            newItem: MovieGenreDomain
         ): Boolean {
             return oldItem.title == newItem.title
         }
 
         override fun areContentsTheSame(
-            oldItem: MovieGenreDomainEntity,
-            newItem: MovieGenreDomainEntity
+            oldItem: MovieGenreDomain,
+            newItem: MovieGenreDomain
         ): Boolean {
             return oldItem == newItem
         }
@@ -45,7 +45,7 @@ class MovieGenresAdapter(
 
     private val differ = AsyncListDiffer(this, callback)
 
-    fun setData(movieGenres: List<MovieGenreDomainEntity>) {
+    fun setData(movieGenres: List<MovieGenreDomain>) {
         differ.submitList(movieGenres)
     }
 

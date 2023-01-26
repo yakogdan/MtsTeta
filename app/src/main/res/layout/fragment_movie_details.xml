@@ -47,7 +47,7 @@
             android:textSize="13.8sp"
             app:layout_constraintBottom_toBottomOf="@+id/tvDate"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvMovieTitle"
+            app:layout_constraintTop_toTopOf="@id/rb"
             tools:ignore="SmallSp"
             tools:text="18+" />
 

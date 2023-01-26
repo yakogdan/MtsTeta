@@ -4,6 +4,7 @@ import android.content.Context
 import com.yakogdan.data.database.room.AppRoomDatabase
 import com.yakogdan.data.database.room.dao.MovieCardDao
 import com.yakogdan.data.database.room.dao.MovieGenreDao
+import com.yakogdan.data.remote.api.TheMovieDbApi
 import com.yakogdan.data.repositories.MovieListRepoImpl
 import com.yakogdan.domain.repositories.MovieListRepository
 import dagger.Module
@@ -20,15 +21,23 @@ class DataModule {
     @Provides
     fun provideMovieListRepository(
         movieCardDao: MovieCardDao,
-        movieGenreDao: MovieGenreDao
+        movieGenreDao: MovieGenreDao,
+        api: TheMovieDbApi
+
     ): MovieListRepository {
-        return MovieListRepoImpl(movieCardDao, movieGenreDao)
+        return MovieListRepoImpl(movieCardDao, movieGenreDao, api)
     }
 
     @Singleton
     @Provides
     fun provideAppDatabase(@ApplicationContext context: Context): AppRoomDatabase {
         return AppRoomDatabase.create(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(): TheMovieDbApi {
+        return TheMovieDbApi.create()
     }
 
     @Provides

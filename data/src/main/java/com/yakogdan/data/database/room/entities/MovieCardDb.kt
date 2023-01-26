@@ -3,10 +3,10 @@ package com.yakogdan.data.database.room.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.yakogdan.data.database.room.entities.MovieCardDbEntity.Companion.TABLE_NAME
+import com.yakogdan.data.database.room.entities.MovieCardDb.Companion.TABLE_NAME
 
 @Entity(tableName = TABLE_NAME)
-data class MovieCardDbEntity(
+data class MovieCardDb(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Long = 0,
