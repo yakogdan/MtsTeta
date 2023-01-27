@@ -4,7 +4,7 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class CardItemDecoration(
+class GridItemDecoration(
     private val start: Int,
     private val end: Int,
     private var bottom: Int
@@ -19,9 +19,9 @@ class CardItemDecoration(
         super.getItemOffsets(outRect, view, parent, state)
 
         outRect.apply {
-            outRect.left = this@CardItemDecoration.start
-            outRect.right = this@CardItemDecoration.end
-            outRect.bottom = this@CardItemDecoration.bottom
+            outRect.left = this@GridItemDecoration.start
+            outRect.right = this@GridItemDecoration.end
+            outRect.bottom = this@GridItemDecoration.bottom
         }
     }
 }

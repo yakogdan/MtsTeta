@@ -2,21 +2,21 @@ package com.yakogdan.domain.interactors
 
 import com.yakogdan.domain.entities.MovieCardDomain
 import com.yakogdan.domain.entities.MovieGenreDomain
-import com.yakogdan.domain.repositories.MovieListRepository
+import com.yakogdan.domain.repositories.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MovieListInteractor @Inject constructor(
-    private val movieListRepository: MovieListRepository
+    private val movieRepository: MovieRepository
 ) {
 
     // MovieCard
 
     suspend fun getMovieCardsFromApi(): Flow<List<MovieCardDomain>> =
-        movieListRepository.getMovieCardsFromApi()
+        movieRepository.getMovieCardsFromApi()
 
     suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>> =
-        movieListRepository.getMovieCardsFromDB()
+        movieRepository.getMovieCardsFromDB()
 
 
 //    suspend fun getMovieCards(): Flow<List<MovieCardDomainEntity>> {
@@ -49,10 +49,10 @@ class MovieListInteractor @Inject constructor(
     // MovieGenre
 
     private suspend fun getMovieGenresFromRepo(): Flow<List<MovieGenreDomain>> =
-        movieListRepository.getMovieGenresFromRepo()
+        movieRepository.getMovieGenresFromRepo()
 
     private suspend fun getMovieGenresFromDB(): Flow<List<MovieGenreDomain>> =
-        movieListRepository.getMovieGenresFromDB()
+        movieRepository.getMovieGenresFromDB()
 
     suspend fun getMovieGenres(): Flow<List<MovieGenreDomain>> {
         return if (movieGenresDbIsEmpty()) {
@@ -66,13 +66,13 @@ class MovieListInteractor @Inject constructor(
     }
 
     private suspend fun addMovieGenres(movieGenres: List<MovieGenreDomain>) =
-        movieListRepository.addMovieGenres(movieGenres)
+        movieRepository.addMovieGenres(movieGenres)
 
 //    suspend fun clearMovieGenresDB() {
 //        movieListRepository.clearMovieGenresDB()
 //    }
 
     private suspend fun movieGenresDbIsEmpty(): Boolean {
-        return movieListRepository.movieGenresDbIsEmpty()
+        return movieRepository.movieGenresDbIsEmpty()
     }
 }

@@ -49,11 +49,17 @@ class MovieGenresAdapter(
         differ.submitList(movieGenres)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieGenresViewHolder {
-        return MovieGenresViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_movie_genres, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieGenresViewHolder =
+        MovieGenresViewHolder(
+            LayoutInflater
+                .from(parent.context)
+                .inflate(
+                    R.layout.item_movie_genres,
+                    parent,
+                    false
+                )
         )
-    }
+
 
     override fun onBindViewHolder(holder: MovieGenresViewHolder, position: Int) {
         val movieGenres = differ.currentList[position]

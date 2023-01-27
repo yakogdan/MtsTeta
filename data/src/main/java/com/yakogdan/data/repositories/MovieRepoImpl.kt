@@ -1,29 +1,29 @@
 package com.yakogdan.data.repositories
 
+import android.util.Log
 import com.yakogdan.data.database.room.dao.MovieCardDao
 import com.yakogdan.data.database.room.dao.MovieGenreDao
-import com.yakogdan.data.mappers.MovieCardMapper
-import com.yakogdan.data.mappers.MovieDetailMapper
-import com.yakogdan.data.mappers.MovieGenreMapper
-import com.yakogdan.data.mappers.PopularMovieMapper
+import com.yakogdan.data.mappers.*
 import com.yakogdan.data.remote.api.TheMovieDbApi
+import com.yakogdan.data.remote.entities.movieactors.MovieActorsRemote
 import com.yakogdan.data.remote.entities.moviedetail.MovieDetailRemote
 import com.yakogdan.data.remote.entities.popularmovies.PopularMoviesRemote
 import com.yakogdan.domain.entities.MovieCardDomain
 import com.yakogdan.domain.entities.MovieGenreDomain
+import com.yakogdan.domain.entities.movieactors.MovieActorsDomain
 import com.yakogdan.domain.entities.moviedetail.MovieDetailDomain
 import com.yakogdan.domain.entities.popularmovies.PopularMoviesDomain
-import com.yakogdan.domain.repositories.MovieListRepository
+import com.yakogdan.domain.repositories.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class MovieListRepoImpl @Inject constructor(
+class MovieRepoImpl @Inject constructor(
     private val movieCardDao: MovieCardDao,
     private val movieGenreDao: MovieGenreDao,
     private val theMovieDbApi: TheMovieDbApi
-) : MovieListRepository {
+) : MovieRepository {
 
     // MovieCard
 
@@ -44,6 +44,7 @@ class MovieListRepoImpl @Inject constructor(
             page = 1
         ).body()
             ?: PopularMoviesRemote()
+
         return PopularMovieMapper.mapRemoteToDomain(popularMovies)
     }
 
@@ -54,7 +55,19 @@ class MovieListRepoImpl @Inject constructor(
             language = LANGUAGE
         ).body()
             ?: MovieDetailRemote()
+        Log.d("myTAG", movieDetails.title)
         return flowOf(MovieDetailMapper.mapRemoteToDomain(movieDetails))
+    }
+
+    override suspend fun getMovieActors(movieId: Long): Flow<MovieActorsDomain> {
+        val movieActors = theMovieDbApi.getMovieActors(
+            movieId = movieId,
+            apiKey = API_KEY,
+            language = LANGUAGE
+        ).body()
+            ?: MovieActorsRemote()
+//        Log.d("myTAG", movieActors.id.toString())
+        return flowOf(MovieActorMapper.mapActorsRemoteToDomain(movieActors))
     }
 
     override suspend fun addMovieCards(movieCards: List<MovieCardDomain>) {

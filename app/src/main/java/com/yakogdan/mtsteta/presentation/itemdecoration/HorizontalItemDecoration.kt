@@ -4,7 +4,7 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class MovieGenresItemDecoration(
+class HorizontalItemDecoration(
     private val startFirst: Int,
     private val endAll: Int
 ) : RecyclerView.ItemDecoration() {
@@ -17,8 +17,8 @@ class MovieGenresItemDecoration(
     ) {
         super.getItemOffsets(outRect, view, parent, state)
         if (parent.getChildAdapterPosition(view) == 0) {
-            outRect.left = this@MovieGenresItemDecoration.startFirst
+            outRect.left = this@HorizontalItemDecoration.startFirst
         }
-        outRect.right = this@MovieGenresItemDecoration.endAll
+        outRect.right = this@HorizontalItemDecoration.endAll
     }
 }

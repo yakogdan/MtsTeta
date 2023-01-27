@@ -5,8 +5,8 @@ import com.yakogdan.data.database.room.AppRoomDatabase
 import com.yakogdan.data.database.room.dao.MovieCardDao
 import com.yakogdan.data.database.room.dao.MovieGenreDao
 import com.yakogdan.data.remote.api.TheMovieDbApi
-import com.yakogdan.data.repositories.MovieListRepoImpl
-import com.yakogdan.domain.repositories.MovieListRepository
+import com.yakogdan.data.repositories.MovieRepoImpl
+import com.yakogdan.domain.repositories.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,8 +24,8 @@ class DataModule {
         movieGenreDao: MovieGenreDao,
         api: TheMovieDbApi
 
-    ): MovieListRepository {
-        return MovieListRepoImpl(movieCardDao, movieGenreDao, api)
+    ): MovieRepository {
+        return MovieRepoImpl(movieCardDao, movieGenreDao, api)
     }
 
     @Singleton

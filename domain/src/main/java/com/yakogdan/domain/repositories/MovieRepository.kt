@@ -2,17 +2,20 @@ package com.yakogdan.domain.repositories
 
 import com.yakogdan.domain.entities.MovieCardDomain
 import com.yakogdan.domain.entities.MovieGenreDomain
+import com.yakogdan.domain.entities.movieactors.MovieActorsDomain
 import com.yakogdan.domain.entities.moviedetail.MovieDetailDomain
 import com.yakogdan.domain.entities.popularmovies.PopularMoviesDomain
 import kotlinx.coroutines.flow.Flow
 
-interface MovieListRepository {
+interface MovieRepository {
 
     // MovieCard
 
     suspend fun getPopularMovieApi(): PopularMoviesDomain
 
     suspend fun getMovieDetailsApi(movieId: Long): Flow<MovieDetailDomain>
+
+    suspend fun getMovieActors(movieId: Long): Flow<MovieActorsDomain>
 
     suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>>
 

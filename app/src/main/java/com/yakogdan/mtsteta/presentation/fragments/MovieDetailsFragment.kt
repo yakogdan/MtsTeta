@@ -1,6 +1,7 @@
 package com.yakogdan.mtsteta.presentation.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.yakogdan.mtsteta.databinding.FragmentMovieDetailsBinding
+import com.yakogdan.mtsteta.presentation.adapters.MovieActorsAdapter
 import com.yakogdan.mtsteta.presentation.adapters.MovieGenresAdapter
-import com.yakogdan.mtsteta.presentation.itemdecoration.MovieGenresItemDecoration
+import com.yakogdan.mtsteta.presentation.itemdecoration.HorizontalItemDecoration
 import com.yakogdan.mtsteta.presentation.viewmodels.MovieDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +29,8 @@ class MovieDetailsFragment : Fragment() {
 
     private lateinit var movieGenresAdapter: MovieGenresAdapter
 
+    private lateinit var movieActorsAdapter: MovieActorsAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,24 +42,45 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initAdapter()
+        initAdapters()
         bundleArgs.movieCard?.let { movieCard ->
-            viewModel.getMovieDetailFromApi(movieCard.id)
-            viewModel.movieDetailLiveData.observe(viewLifecycleOwner) { movieDetails ->
-                movieGenresAdapter.setData(movieDetails.genres)
-                with(binding) {
-                    tvMovieTitle.text = movieDetails.title
-                    tvDate.text = movieDetails.release_date
-                    tvMovieDescription.text = movieDetails.overview
-                    rb.rating = movieDetails.vote_average.toFloat()
-                    tvAgeRestriction.text = getAgeRestriction(movieDetails.adult)
-                    ivMoviePoster.load("https://www.themoviedb.org/t/p/w1000_and_h450_multi_faces" + movieCard.posterUrl)
+            val movieId = movieCard.id
+            viewModel.apply {
+                getMovieDetailFromApi(movieId)
+                getMovieActorsFromApi(movieId)
+                Log.d("myTAG", "апи прошёл")
+                movieDetailLiveData.observe(viewLifecycleOwner) { movieDetails ->
+                    movieGenresAdapter.setData(movieDetails.genres)
+                    with(binding) {
+                        ivMoviePoster.load("https://www.themoviedb.org/t/p/w1000_and_h450_multi_faces" + movieCard.posterUrl)
+                        tvMovieTitle.text = movieDetails.title
+                        rb.rating = movieDetails.vote_average.toFloat() / 2
+                        tvDate.text = movieDetails.release_date
+                        tvAgeRestriction.text = getAgeRestriction(movieDetails.adult)
+                        tvMovieDescription.text = movieDetails.overview
+                    }
                 }
             }
         }
+        viewModel.movieActorsLiveData.observe(viewLifecycleOwner) { movieActors ->
+            movieActorsAdapter.setData(movieActors)
+        }
+//        movieActorsAdapter.setData(
+//            MovieActorsDomain(listOf(
+//                ActorDomain(
+//                    name = "LKDSj",
+//                    profilePath = "/iWIUEwgn2KW50MssR7tdPeFoRGW.jpg"
+//                ),
+//                ActorDomain(
+//                    name = "LKDfghjfgSj",
+//                    profilePath = "/iWIUEwgn2KW50MssR7tdPeFoRGW.jpg"
+//                )
+//            ),
+//            1)
+//        )
     }
 
-    private fun initAdapter() {
+    private fun initAdapters() {
         movieGenresAdapter = MovieGenresAdapter(
             onItemClickListener = { movieGenres ->
                 Toast.makeText(
@@ -65,11 +90,21 @@ class MovieDetailsFragment : Fragment() {
                 ).show()
             }
         )
+        movieActorsAdapter = MovieActorsAdapter()
         binding.apply {
             rvGenresDM.apply {
                 adapter = movieGenresAdapter
                 addItemDecoration(
-                    MovieGenresItemDecoration(
+                    HorizontalItemDecoration(
+                        startFirst = 54,
+                        endAll = 25
+                    )
+                )
+            }
+            rvActors.apply {
+                adapter = movieActorsAdapter
+                addItemDecoration(
+                    HorizontalItemDecoration(
                         startFirst = 54,
                         endAll = 25
                     )

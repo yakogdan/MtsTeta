@@ -37,7 +37,7 @@ class MovieListViewModel @Inject constructor(
     fun getMovieCardsFromApi() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                movieListInteractor.getMovieCardsFromApi().collect() {
+                movieListInteractor.getMovieCardsFromApi().collect {
                     withContext(Dispatchers.Main) {
                         _movieCardLiveData.value = it
                     }

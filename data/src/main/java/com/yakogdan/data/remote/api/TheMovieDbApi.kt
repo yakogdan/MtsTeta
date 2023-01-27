@@ -1,5 +1,6 @@
 package com.yakogdan.data.remote.api
 
+import com.yakogdan.data.remote.entities.movieactors.MovieActorsRemote
 import com.yakogdan.data.remote.entities.moviedetail.MovieDetailRemote
 import com.yakogdan.data.remote.entities.popularmovies.PopularMoviesRemote
 import com.yakogdan.data.remote.utils.RetrofitExtensions.Companion.addJsonConverter
@@ -25,6 +26,13 @@ interface TheMovieDbApi {
         @Query("api_key") apiKey: String,
         @Query("language") language: String
     ): Response<MovieDetailRemote>
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getMovieActors(
+        @Path("movie_id") movieId: Long,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String
+    ): Response<MovieActorsRemote>
 
     companion object {
         private const val BASE_URL = "https://api.themoviedb.org/3/"

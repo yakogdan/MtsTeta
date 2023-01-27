@@ -12,9 +12,9 @@ import com.yakogdan.domain.entities.MovieCardDomain
 import com.yakogdan.mtsteta.R
 import com.yakogdan.mtsteta.databinding.ItemMovieCardBinding
 
-class MovieCardAdapter(
+class MovieCardsAdapter(
     private var onItemClickListener: (MovieCardDomain) -> Unit
-) : RecyclerView.Adapter<MovieCardAdapter.MovieCardViewHolder>() {
+) : RecyclerView.Adapter<MovieCardsAdapter.MovieCardViewHolder>() {
 
     inner class MovieCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -27,7 +27,7 @@ class MovieCardAdapter(
                 tvItemMovieDescription.text = movieCard.description
                 val ageRestriction = movieCard.ageRestriction.toString() + "+"
                 tvAgeRestriction.text = ageRestriction
-                rbMovie.rating = movieCard.rateScore.toFloat()/2
+                rbMovie.rating = movieCard.rateScore.toFloat() / 2
                 root.setOnClickListener {
                     onItemClickListener(movieCard)
                 }
@@ -58,11 +58,17 @@ class MovieCardAdapter(
         differ.submitList(movieCards)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieCardViewHolder {
-        return MovieCardViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_movie_card, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieCardViewHolder =
+        MovieCardViewHolder(
+            LayoutInflater
+                .from(parent.context)
+                .inflate(
+                    R.layout.item_movie_card,
+                    parent,
+                    false
+                )
         )
-    }
+
 
     override fun onBindViewHolder(holder: MovieCardViewHolder, position: Int) {
         holder.bind(differ.currentList[position])
