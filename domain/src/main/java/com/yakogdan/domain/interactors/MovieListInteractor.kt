@@ -1,5 +1,6 @@
 package com.yakogdan.domain.interactors
 
+import android.util.Log
 import com.yakogdan.domain.entities.moviecards.MovieCardDomain
 import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.domain.repositories.MovieRepository
@@ -12,39 +13,53 @@ class MovieListInteractor @Inject constructor(
 
     // MovieCard
 
-    suspend fun getMovieCardsFromApi(): Flow<List<MovieCardDomain>> =
-        movieRepository.getMovieCardsFromApi()
+    private suspend fun getMovieCardsFromApi(): Flow<List<MovieCardDomain>> {
+        Log.d("myTAG", "getMovieCardsFromApi: interactor")
+        return movieRepository.getMovieCardsFromApi()
+    }
 
-//    suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>> =
-//        movieRepository.getMovieCardsFromDB()
+
+    private suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>> =
+        movieRepository.getMovieCardsFromDB()
 
 
-//    suspend fun getMovieCards(): Flow<List<MovieCardDomainEntity>> {
-//        return if (movieCardsDbIsEmpty()) {
-//            getMovieCardsFromRepo().collect {
-//                addMovieCards(it)
-//            }
-//            getMovieCardsFromRepo()
-//
-//        } else {
-//            getMovieCardsFromDB()
-//        }
-//    }
+    suspend fun getMovieCards(): Flow<List<MovieCardDomain>> {
+        return if (movieCardsDbIsEmpty()) {
+            try {
+                getMovieCardsFromApi().collect {
+                    addMovieCards(it)
+                }
+                getMovieCardsFromApi()
+            } catch (e: Exception) {
+                Log.e("eTAG", e.message.toString())
+                getMovieCardsFromDB()
+            }
 
-//    suspend fun getPopularMovieApi(): PopularMoviesDomain =
-//        movieListRepository.getPopularMovieApi()
-//
-//
-//    private suspend fun addMovieCards(movieCards: List<MovieCardDomain>) =
-//        movieListRepository.addMovieCards(movieCards)
-//
-//    suspend fun clearMovieCardsDB() {
-//        movieListRepository.clearMovieCardsDB()
-//    }
-//
-//    private suspend fun movieCardsDbIsEmpty(): Boolean {
-//        return movieListRepository.movieCardsDbIsEmpty()
-//    }
+        } else {
+            getMovieCardsFromDB()
+            try {
+                getMovieCardsFromApi().collect {
+                    clearMovieCardsDB()
+                    addMovieCards(it)
+                }
+                getMovieCardsFromApi()
+            } catch (e: Exception) {
+                Log.e("eTAG", e.message.toString())
+                getMovieCardsFromDB()
+            }
+        }
+    }
+
+    private suspend fun addMovieCards(movieCards: List<MovieCardDomain>) =
+        movieRepository.addMovieCards(movieCards)
+
+    private suspend fun clearMovieCardsDB() {
+        movieRepository.clearMovieCardsDB()
+    }
+
+    private suspend fun movieCardsDbIsEmpty(): Boolean {
+        return movieRepository.movieCardsDbIsEmpty()
+    }
 
     // MovieGenre
 

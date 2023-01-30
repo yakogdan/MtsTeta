@@ -1,6 +1,5 @@
 package com.yakogdan.mtsteta.presentation.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,29 +23,29 @@ class MovieListViewModel @Inject constructor(
     private val _movieCardLiveData = MutableLiveData<List<MovieCardDomain>>()
     val movieCardLiveData: LiveData<List<MovieCardDomain>> get() = _movieCardLiveData
 
-//    fun getMovieCards() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.getMovieCards().collect {
-//                withContext(Dispatchers.Main) {
-//                    _movieCardLiveData.value = it
-//                }
-//            }
-//        }
-//    }
-
-    fun getMovieCardsFromApi() {
+    fun getMovieCards() {
         viewModelScope.launch(Dispatchers.IO) {
-            try {
-                movieListInteractor.getMovieCardsFromApi().collect {
-                    withContext(Dispatchers.Main) {
-                        _movieCardLiveData.value = it
-                    }
+            movieListInteractor.getMovieCards().collect {
+                withContext(Dispatchers.Main) {
+                    _movieCardLiveData.value = it
                 }
-            } catch (e: Exception) {
-                Log.e("eTAG", "getMovieCardsFromApi: не работает ниче")
             }
         }
     }
+
+//    fun getMovieCardsFromApi() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            try {
+//                movieListInteractor.getMovieCardsFromApi().collect {
+//                    withContext(Dispatchers.Main) {
+//                        _movieCardLiveData.value = it
+//                    }
+//                }
+//            } catch (e: Exception) {
+//                Log.e("eTAG", "getMovieCardsFromApi: не работает ниче")
+//            }
+//        }
+//    }
 
 //    fun getMovieCardsFromDB() {
 //        viewModelScope.launch(Dispatchers.IO) {
