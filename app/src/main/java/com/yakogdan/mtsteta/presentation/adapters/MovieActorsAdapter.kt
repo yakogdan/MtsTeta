@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.yakogdan.domain.entities.movieactors.ActorDomain
-import com.yakogdan.domain.entities.movieactors.MovieActorsDomain
+import com.yakogdan.domain.entities.movieactors.MovieActorDomain
 import com.yakogdan.mtsteta.R
 import com.yakogdan.mtsteta.databinding.ItemActorCardBinding
 
@@ -18,32 +17,38 @@ class MovieActorsAdapter : RecyclerView.Adapter<MovieActorsAdapter.MovieActorsVi
 
         private val binding = ItemActorCardBinding.bind(view)
 
-        fun bind(actorDomain: ActorDomain) {
+        fun bind(movieActorDomain: MovieActorDomain) {
             binding.apply {
                 ivActorPhoto
                     .load(
                         "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" +
-                                actorDomain.profilePath
+                                movieActorDomain.profilePath
                     )
-                tvActorName.text = actorDomain.name
+                tvActorName.text = movieActorDomain.name
             }
         }
     }
 
-    private val callback = object : DiffUtil.ItemCallback<ActorDomain>() {
-        override fun areItemsTheSame(oldItem: ActorDomain, newItem: ActorDomain): Boolean {
+    private val callback = object : DiffUtil.ItemCallback<MovieActorDomain>() {
+        override fun areItemsTheSame(
+            oldItem: MovieActorDomain,
+            newItem: MovieActorDomain
+        ): Boolean {
             return oldItem.name == newItem.name
         }
 
-        override fun areContentsTheSame(oldItem: ActorDomain, newItem: ActorDomain): Boolean {
+        override fun areContentsTheSame(
+            oldItem: MovieActorDomain,
+            newItem: MovieActorDomain
+        ): Boolean {
             return oldItem.name == newItem.name
         }
     }
 
     private val differ = AsyncListDiffer(this, callback)
 
-    fun setData(movieActorsDomain: MovieActorsDomain) {
-        differ.submitList(movieActorsDomain.actors)
+    fun setData(movieActors: List<MovieActorDomain>) {
+        differ.submitList(movieActors)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieActorsViewHolder =

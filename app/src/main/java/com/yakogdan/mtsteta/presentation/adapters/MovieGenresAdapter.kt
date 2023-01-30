@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.yakogdan.domain.entities.MovieGenreDomain
+import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.mtsteta.R
 import com.yakogdan.mtsteta.databinding.ItemMovieGenresBinding
 

@@ -1,24 +1,16 @@
 package com.yakogdan.data.mappers
 
-import com.yakogdan.data.remote.entities.movieactors.ActorRemote
-import com.yakogdan.data.remote.entities.movieactors.MovieActorsRemote
-import com.yakogdan.domain.entities.movieactors.ActorDomain
-import com.yakogdan.domain.entities.movieactors.MovieActorsDomain
+import com.yakogdan.data.remote.entities.movieactors.MovieActorRemote
+import com.yakogdan.domain.entities.movieactors.MovieActorDomain
 
 object MovieActorMapper {
 
-    fun mapActorsRemoteToDomain(movieActorsRemote: MovieActorsRemote): MovieActorsDomain =
-        MovieActorsDomain(
-            actors = mapActorRemoteToDomainList(movieActorsRemote.actors),
-            id = movieActorsRemote.id
+    private fun mapActorRemoteToDomain(movieActorRemote: MovieActorRemote): MovieActorDomain =
+        MovieActorDomain(
+            name = movieActorRemote.name,
+            profilePath = movieActorRemote.profilePath
         )
 
-    private fun mapActorRemoteToDomain(actorRemote: ActorRemote): ActorDomain =
-        ActorDomain(
-            name = actorRemote.name,
-            profilePath = actorRemote.profilePath
-        )
-
-    private fun mapActorRemoteToDomainList(items: List<ActorRemote>?): List<ActorDomain>? =
+    fun mapActorRemoteToDomainList(items: List<MovieActorRemote>?): List<MovieActorDomain>? =
         items?.map(MovieActorMapper::mapActorRemoteToDomain)
 }

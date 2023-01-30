@@ -13,7 +13,7 @@
         tools:layout="@layout/fragment_movie_details" >
         <argument
             android:name="movieCard"
-            app:argType="com.yakogdan.domain.entities.MovieCardDomain"
+            app:argType="com.yakogdan.domain.entities.moviecards.MovieCardDomain"
             app:nullable="true" />
     </fragment>
     <fragment

@@ -1,4 +1,4 @@
-package com.yakogdan.domain.entities
+package com.yakogdan.domain.entities.moviegenres
 
 import java.io.Serializable
 

@@ -1,8 +1,8 @@
 package com.yakogdan.data.remote.api
 
 import com.yakogdan.data.remote.entities.movieactors.MovieActorsRemote
-import com.yakogdan.data.remote.entities.moviedetail.MovieDetailRemote
-import com.yakogdan.data.remote.entities.popularmovies.PopularMoviesRemote
+import com.yakogdan.data.remote.entities.moviedetails.MovieDetailsRemote
+import com.yakogdan.data.remote.entities.moviecards.MovieCardsRemote
 import com.yakogdan.data.remote.utils.RetrofitExtensions.Companion.addJsonConverter
 import com.yakogdan.data.remote.utils.RetrofitExtensions.Companion.setClient
 import retrofit2.Response
@@ -18,14 +18,14 @@ interface TheMovieDbApi {
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
         @Query("page") page: Int
-    ): Response<PopularMoviesRemote>
+    ): Response<MovieCardsRemote>
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(
         @Path("movie_id") movieId: Long,
         @Query("api_key") apiKey: String,
         @Query("language") language: String
-    ): Response<MovieDetailRemote>
+    ): Response<MovieDetailsRemote>
 
     @GET("movie/{movie_id}/credits")
     suspend fun getMovieActors(

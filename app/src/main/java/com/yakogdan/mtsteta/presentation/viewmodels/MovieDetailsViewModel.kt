@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yakogdan.domain.entities.movieactors.MovieActorsDomain
-import com.yakogdan.domain.entities.moviedetail.MovieDetailDomain
+import com.yakogdan.domain.entities.movieactors.MovieActorDomain
+import com.yakogdan.domain.entities.moviedetails.MovieDetailsDomain
 import com.yakogdan.domain.interactors.MovieDetailsInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,10 +18,10 @@ class MovieDetailsViewModel @Inject constructor(
     private val movieDetailsInteractor: MovieDetailsInteractor
 ) : ViewModel() {
 
-    private val _movieDetailLiveData = MutableLiveData<MovieDetailDomain>()
+    private val _movieDetailLiveData = MutableLiveData<MovieDetailsDomain>()
     val movieDetailLiveData get() = _movieDetailLiveData
 
-    private val _movieActorsLiveData = MutableLiveData<MovieActorsDomain>()
+    private val _movieActorsLiveData = MutableLiveData<List<MovieActorDomain>>()
     val movieActorsLiveData get() = _movieActorsLiveData
 
     fun getMovieDetailFromApi(movieId: Long) {

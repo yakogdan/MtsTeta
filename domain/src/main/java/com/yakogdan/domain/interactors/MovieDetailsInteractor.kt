@@ -1,7 +1,7 @@
 package com.yakogdan.domain.interactors
 
-import com.yakogdan.domain.entities.movieactors.MovieActorsDomain
-import com.yakogdan.domain.entities.moviedetail.MovieDetailDomain
+import com.yakogdan.domain.entities.movieactors.MovieActorDomain
+import com.yakogdan.domain.entities.moviedetails.MovieDetailsDomain
 import com.yakogdan.domain.repositories.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -9,9 +9,9 @@ import javax.inject.Inject
 class MovieDetailsInteractor @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend fun  getMovieDetailFromApi(movieId: Long): Flow<MovieDetailDomain> =
-        movieRepository.getMovieDetailsApi(movieId)
+    suspend fun getMovieDetailFromApi(movieId: Long): Flow<MovieDetailsDomain> =
+        movieRepository.getMovieDetailsFromApi(movieId)
 
-    suspend fun getMovieActorsFromApi(movieId: Long): Flow<MovieActorsDomain> =
-        movieRepository.getMovieActors(movieId)
+    suspend fun getMovieActorsFromApi(movieId: Long): Flow<List<MovieActorDomain>?> =
+        movieRepository.getMovieActorsFromApi(movieId)
 }

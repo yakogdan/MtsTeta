@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yakogdan.domain.entities.MovieCardDomain
-import com.yakogdan.domain.entities.MovieGenreDomain
+import com.yakogdan.domain.entities.moviecards.MovieCardDomain
+import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.domain.interactors.MovieListInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -48,15 +48,15 @@ class MovieListViewModel @Inject constructor(
         }
     }
 
-    fun getMovieCardsFromDB() {
-        viewModelScope.launch(Dispatchers.IO) {
-            movieListInteractor.getMovieCardsFromDB().collect {
-                withContext(Dispatchers.Main) {
-                    _movieCardLiveData.value = it
-                }
-            }
-        }
-    }
+//    fun getMovieCardsFromDB() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            movieListInteractor.getMovieCardsFromDB().collect {
+//                withContext(Dispatchers.Main) {
+//                    _movieCardLiveData.value = it
+//                }
+//            }
+//        }
+//    }
 
 //    fun addMovieCards(movieCards: List<MovieCardDomainEntity>) {
 //        viewModelScope.launch(Dispatchers.IO) {

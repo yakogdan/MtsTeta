@@ -43,7 +43,7 @@ class MovieListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getMovieGenres()
-        viewModel.getMovieCardsFromDB()
+//        viewModel.getMovieCardsFromDB()
         viewModel.getMovieCardsFromApi()
         initAdapters()
 

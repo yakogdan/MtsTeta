@@ -1,18 +1,19 @@
 package com.yakogdan.data.repositories
 
-import android.util.Log
 import com.yakogdan.data.database.room.dao.MovieCardDao
 import com.yakogdan.data.database.room.dao.MovieGenreDao
-import com.yakogdan.data.mappers.*
+import com.yakogdan.data.mappers.MovieActorMapper
+import com.yakogdan.data.mappers.MovieCardMapper
+import com.yakogdan.data.mappers.MovieDetailMapper
+import com.yakogdan.data.mappers.MovieGenreMapper
 import com.yakogdan.data.remote.api.TheMovieDbApi
 import com.yakogdan.data.remote.entities.movieactors.MovieActorsRemote
-import com.yakogdan.data.remote.entities.moviedetail.MovieDetailRemote
-import com.yakogdan.data.remote.entities.popularmovies.PopularMoviesRemote
-import com.yakogdan.domain.entities.MovieCardDomain
-import com.yakogdan.domain.entities.MovieGenreDomain
-import com.yakogdan.domain.entities.movieactors.MovieActorsDomain
-import com.yakogdan.domain.entities.moviedetail.MovieDetailDomain
-import com.yakogdan.domain.entities.popularmovies.PopularMoviesDomain
+import com.yakogdan.data.remote.entities.moviecards.MovieCardsRemote
+import com.yakogdan.data.remote.entities.moviedetails.MovieDetailsRemote
+import com.yakogdan.domain.entities.movieactors.MovieActorDomain
+import com.yakogdan.domain.entities.moviecards.MovieCardDomain
+import com.yakogdan.domain.entities.moviedetails.MovieDetailsDomain
+import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.domain.repositories.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -33,41 +34,34 @@ class MovieRepoImpl @Inject constructor(
     }
 
     override suspend fun getMovieCardsFromApi(): Flow<List<MovieCardDomain>> {
-        val listPopularMovies = getPopularMovieApi().results
-        return flowOf(listPopularMovies.map { PopularMovieMapper.mapToMovieCard(it) })
-    }
-
-    override suspend fun getPopularMovieApi(): PopularMoviesDomain {
-        val popularMovies = theMovieDbApi.getPopularMovies(
+        val response = theMovieDbApi.getPopularMovies(
             apiKey = API_KEY,
             language = LANGUAGE,
             page = 1
         ).body()
-            ?: PopularMoviesRemote()
+            ?: MovieCardsRemote()
 
-        return PopularMovieMapper.mapRemoteToDomain(popularMovies)
+        return flowOf(MovieCardMapper.mapRemoteToDomainList(response.results))
     }
 
-    override suspend fun getMovieDetailsApi(movieId: Long): Flow<MovieDetailDomain> {
-        val movieDetails = theMovieDbApi.getMovieDetails(
+    override suspend fun getMovieDetailsFromApi(movieId: Long): Flow<MovieDetailsDomain> {
+        val response = theMovieDbApi.getMovieDetails(
             movieId = movieId,
             apiKey = API_KEY,
             language = LANGUAGE
         ).body()
-            ?: MovieDetailRemote()
-        Log.d("myTAG", movieDetails.title)
-        return flowOf(MovieDetailMapper.mapRemoteToDomain(movieDetails))
+            ?: MovieDetailsRemote()
+        return flowOf(MovieDetailMapper.mapRemoteToDomain(response))
     }
 
-    override suspend fun getMovieActors(movieId: Long): Flow<MovieActorsDomain> {
-        val movieActors = theMovieDbApi.getMovieActors(
+    override suspend fun getMovieActorsFromApi(movieId: Long): Flow<List<MovieActorDomain>?> {
+        val response = theMovieDbApi.getMovieActors(
             movieId = movieId,
             apiKey = API_KEY,
             language = LANGUAGE
         ).body()
             ?: MovieActorsRemote()
-//        Log.d("myTAG", movieActors.id.toString())
-        return flowOf(MovieActorMapper.mapActorsRemoteToDomain(movieActors))
+        return flowOf(MovieActorMapper.mapActorRemoteToDomainList(response.actors))
     }
 
     override suspend fun addMovieCards(movieCards: List<MovieCardDomain>) {
@@ -100,10 +94,6 @@ class MovieRepoImpl @Inject constructor(
     override suspend fun getMovieGenresFromDB(): Flow<List<MovieGenreDomain>> {
         return movieGenreDao.getMovieGenres()
             .map { movieGenres -> movieGenres.map { MovieGenreMapper.mapDbToDomain(it) } }
-    }
-
-    override suspend fun addMovieGenre(movieGenre: MovieGenreDomain) {
-        movieGenreDao.addMovieGenre(MovieGenreMapper.mapDomainToDb(movieGenre))
     }
 
     override suspend fun addMovieGenres(movieGenres: List<MovieGenreDomain>) {

@@ -1,7 +1,7 @@
 package com.yakogdan.domain.interactors
 
-import com.yakogdan.domain.entities.MovieCardDomain
-import com.yakogdan.domain.entities.MovieGenreDomain
+import com.yakogdan.domain.entities.moviecards.MovieCardDomain
+import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.domain.repositories.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -15,8 +15,8 @@ class MovieListInteractor @Inject constructor(
     suspend fun getMovieCardsFromApi(): Flow<List<MovieCardDomain>> =
         movieRepository.getMovieCardsFromApi()
 
-    suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>> =
-        movieRepository.getMovieCardsFromDB()
+//    suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>> =
+//        movieRepository.getMovieCardsFromDB()
 
 
 //    suspend fun getMovieCards(): Flow<List<MovieCardDomainEntity>> {

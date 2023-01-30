@@ -1,8 +1,8 @@
 package com.yakogdan.data.mappers
 
 import com.yakogdan.data.database.room.entities.MovieGenreDb
-import com.yakogdan.data.remote.entities.moviedetail.GenreRemote
-import com.yakogdan.domain.entities.MovieGenreDomain
+import com.yakogdan.data.remote.entities.moviegenres.MovieGenreRemote
+import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 
 object MovieGenreMapper {
     fun mapDbToDomain(movieGenreDb: MovieGenreDb): MovieGenreDomain =
@@ -21,12 +21,12 @@ object MovieGenreMapper {
         items.map(MovieGenreMapper::mapDomainToDb)
 
 
-    private fun mapGenreRmToMovieGenreDm(genreRemote: GenreRemote): MovieGenreDomain =
+    private fun mapGenreRmToMovieGenreDm(movieGenreRemote: MovieGenreRemote): MovieGenreDomain =
         MovieGenreDomain(
-            id = genreRemote.id.toLong(),
-            title = genreRemote.title
+            id = movieGenreRemote.id,
+            title = movieGenreRemote.title
         )
 
-    fun mapGenreRmToMovieGenreDmList(items: List<GenreRemote>): List<MovieGenreDomain> =
+    fun mapGenreRmToMovieGenreDmList(items: List<MovieGenreRemote>): List<MovieGenreDomain> =
         items.map(MovieGenreMapper::mapGenreRmToMovieGenreDm)
 }

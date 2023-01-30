@@ -52,12 +52,12 @@ class MovieDetailsFragment : Fragment() {
                 movieDetailLiveData.observe(viewLifecycleOwner) { movieDetails ->
                     movieGenresAdapter.setData(movieDetails.genres)
                     with(binding) {
-                        ivMoviePoster.load("https://www.themoviedb.org/t/p/w1000_and_h450_multi_faces" + movieCard.posterUrl)
+                        ivMoviePoster.load("https://www.themoviedb.org/t/p/w1000_and_h450_multi_faces" + movieCard.posterPath)
                         tvMovieTitle.text = movieDetails.title
-                        rb.rating = movieDetails.vote_average.toFloat() / 2
-                        tvDate.text = movieDetails.release_date
+                        rb.rating = movieDetails.voteAverage.toFloat() / 2
+                        tvDate.text = movieDetails.releaseDate
                         tvAgeRestriction.text = getAgeRestriction(movieDetails.adult)
-                        tvMovieDescription.text = movieDetails.overview
+                        tvMovieDescription.text = movieDetails.description
                     }
                 }
             }

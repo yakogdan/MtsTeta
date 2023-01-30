@@ -1,12 +1,12 @@
-package com.yakogdan.data.remote.entities.moviedetail
+package com.yakogdan.data.remote.entities.moviegenres
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GenreRemote(
+data class MovieGenreRemote(
     @SerialName("id")
-    val id: Int,
+    val id: Long,
     @SerialName("name")
     val title: String
 )

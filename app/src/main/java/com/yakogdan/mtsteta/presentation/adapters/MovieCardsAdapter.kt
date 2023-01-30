@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.yakogdan.domain.entities.MovieCardDomain
+import com.yakogdan.domain.entities.moviecards.MovieCardDomain
 import com.yakogdan.mtsteta.R
 import com.yakogdan.mtsteta.databinding.ItemMovieCardBinding
 
@@ -22,16 +22,23 @@ class MovieCardsAdapter(
 
         fun bind(movieCard: MovieCardDomain) {
             binding.apply {
-                ivItemMoviePoster.load("https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + movieCard.posterUrl)
+                ivItemMoviePoster.load("https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + movieCard.posterPath)
                 tvItemMovieTitle.text = movieCard.title
                 tvItemMovieDescription.text = movieCard.description
-                val ageRestriction = movieCard.ageRestriction.toString() + "+"
-                tvAgeRestriction.text = ageRestriction
-                rbMovie.rating = movieCard.rateScore.toFloat() / 2
+                tvAgeRestriction.text = getAgeRestriction(movieCard)
+                rbMovie.rating = movieCard.voteAverage.toFloat() / 2
                 root.setOnClickListener {
                     onItemClickListener(movieCard)
                 }
             }
+        }
+    }
+
+    private fun getAgeRestriction(movieCard: MovieCardDomain): String {
+        return if (movieCard.adult) {
+            "18+"
+        } else {
+            "12+"
         }
     }
 

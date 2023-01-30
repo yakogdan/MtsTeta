@@ -1,19 +1,19 @@
 package com.yakogdan.data.mappers
 
-import com.yakogdan.data.remote.entities.moviedetail.MovieDetailRemote
-import com.yakogdan.domain.entities.moviedetail.MovieDetailDomain
+import com.yakogdan.data.remote.entities.moviedetails.MovieDetailsRemote
+import com.yakogdan.domain.entities.moviedetails.MovieDetailsDomain
 
 object MovieDetailMapper {
 
-    fun mapRemoteToDomain(movieDetail: MovieDetailRemote): MovieDetailDomain =
-        MovieDetailDomain(
+    fun mapRemoteToDomain(movieDetail: MovieDetailsRemote): MovieDetailsDomain =
+        MovieDetailsDomain(
+            id = movieDetail.id,
+            title = movieDetail.title,
+            description = movieDetail.description,
             adult = movieDetail.adult,
             genres = MovieGenreMapper.mapGenreRmToMovieGenreDmList(movieDetail.genres),
-            id = movieDetail.id,
-            overview = movieDetail.overview,
-            poster_path = movieDetail.poster_path,
-            release_date = movieDetail.release_date,
-            title = movieDetail.title,
-            vote_average = movieDetail.vote_average
+            posterPath = movieDetail.posterPath,
+            releaseDate = movieDetail.releaseDate,
+            voteAverage = movieDetail.voteAverage
         )
 }

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.yakogdan.domain.entities.MovieGenreDomain
+import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.mtsteta.databinding.FragmentProfileBinding
 import com.yakogdan.mtsteta.presentation.adapters.MovieGenresAdapter
 import com.yakogdan.mtsteta.presentation.itemdecoration.HorizontalItemDecoration
