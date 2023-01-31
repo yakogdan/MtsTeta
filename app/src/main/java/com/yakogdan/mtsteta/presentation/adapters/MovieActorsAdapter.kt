@@ -19,11 +19,15 @@ class MovieActorsAdapter : RecyclerView.Adapter<MovieActorsAdapter.MovieActorsVi
 
         fun bind(movieActorDomain: MovieActorDomain) {
             binding.apply {
-                ivActorPhoto
-                    .load(
-                        "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" +
-                                movieActorDomain.profilePath
-                    )
+                if (movieActorDomain.profilePath != null) {
+                    ivActorPhoto
+                        .load(
+                            "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" +
+                                    movieActorDomain.profilePath
+                        )
+                } else {
+                    ivActorPhoto.setImageResource(R.drawable.ic_image_not_found)
+                }
                 tvActorName.text = movieActorDomain.name
             }
         }

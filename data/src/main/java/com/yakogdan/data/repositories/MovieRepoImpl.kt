@@ -37,7 +37,7 @@ class MovieRepoImpl @Inject constructor(
         val response = theMovieDbApi.getPopularMovies(
             apiKey = API_KEY,
             language = LANGUAGE,
-            page = 1
+            page = 2
         ).body()
             ?: MovieCardsRemote()
 
