@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/ivMoviePoster"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="230dp"
             android:contentDescription="@string/movie_poster"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +47,7 @@
             android:textSize="13.8sp"
             app:layout_constraintBottom_toBottomOf="@+id/tvDate"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvMovieTitle"
+            app:layout_constraintTop_toTopOf="@id/rb"
             tools:ignore="SmallSp"
             tools:text="18+" />
 
@@ -73,7 +73,6 @@
             android:numStars="5"
             android:progressDrawable="@drawable/ic_custom_ratingbar_dm"
             android:stepSize="1"
-            app:layout_constraintEnd_toEndOf="@+id/tvDate"
             app:layout_constraintStart_toStartOf="@+id/tvDate"
             app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle" />
 
@@ -121,7 +120,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvMovieDescription" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvFavoriteGenres"
+            android:id="@+id/rvActors"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

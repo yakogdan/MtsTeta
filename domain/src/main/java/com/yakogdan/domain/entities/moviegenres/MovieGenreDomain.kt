@@ -1,8 +1,8 @@
-package com.yakogdan.domain.entities
+package com.yakogdan.domain.entities.moviegenres
 
 import java.io.Serializable
 
-data class MovieGenreDomainEntity(
+data class MovieGenreDomain(
     val id: Long,
     val title: String
 ) : Serializable

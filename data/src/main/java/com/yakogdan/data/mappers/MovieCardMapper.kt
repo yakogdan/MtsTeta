@@ -1,42 +1,44 @@
 package com.yakogdan.data.mappers
 
-import com.yakogdan.data.database.room.entities.MovieCardDbEntity
-import com.yakogdan.domain.entities.MovieCardDomainEntity
+import com.yakogdan.data.database.room.entities.MovieCardDb
+import com.yakogdan.data.remote.entities.moviecards.MovieCardRemote
+import com.yakogdan.domain.entities.moviecards.MovieCardDomain
 
 object MovieCardMapper {
 
-    fun mapDbToDomain(movieCardDbEntity: MovieCardDbEntity): MovieCardDomainEntity =
-        MovieCardDomainEntity(
-            id = movieCardDbEntity.id,
-            title = movieCardDbEntity.title,
-            description = movieCardDbEntity.description,
-            rateScore = movieCardDbEntity.rateScore,
-            ageRestriction = movieCardDbEntity.ageRestriction,
-            posterUrl = movieCardDbEntity.posterUrl
+    fun mapDbToDomain(movieCardDb: MovieCardDb): MovieCardDomain =
+        MovieCardDomain(
+            id = movieCardDb.id,
+            title = movieCardDb.title,
+            description = movieCardDb.description,
+            voteAverage = movieCardDb.voteAverage,
+            adult = movieCardDb.adult,
+            posterPath = movieCardDb.posterPath
         )
 
-    fun mapDomainToDb(movieCardDomainEntity: MovieCardDomainEntity): MovieCardDbEntity =
-        MovieCardDbEntity(
-            id = movieCardDomainEntity.id,
-            title = movieCardDomainEntity.title,
-            description = movieCardDomainEntity.description,
-            rateScore = movieCardDomainEntity.rateScore,
-            ageRestriction = movieCardDomainEntity.ageRestriction,
-            posterUrl = movieCardDomainEntity.posterUrl
+    fun mapDomainToDb(movieCardDomain: MovieCardDomain): MovieCardDb =
+        MovieCardDb(
+            id = movieCardDomain.id,
+            title = movieCardDomain.title,
+            description = movieCardDomain.description,
+            voteAverage = movieCardDomain.voteAverage,
+            adult = movieCardDomain.adult,
+            posterPath = movieCardDomain.posterPath
         )
 
-//    fun mapDomainToDbWithoutId(movieCardDomainEntity: MovieCardDomainEntity): MovieCardDbEntity =
-//        MovieCardDbEntity(
-//            title = movieCardDomainEntity.title,
-//            description = movieCardDomainEntity.description,
-//            rateScore = movieCardDomainEntity.rateScore,
-//            ageRestriction = movieCardDomainEntity.ageRestriction,
-//            posterUrl = movieCardDomainEntity.posterUrl
-//        )
+    private fun mapRemoteToDomain(movieCardRemote: MovieCardRemote): MovieCardDomain =
+        MovieCardDomain(
+            id = movieCardRemote.id,
+            title = movieCardRemote.title,
+            description = movieCardRemote.description,
+            voteAverage = movieCardRemote.voteAverage,
+            adult = movieCardRemote.adult,
+            posterPath = movieCardRemote.posterPath
+        )
 
-    fun mapDomainToDbList(items: List<MovieCardDomainEntity>): List<MovieCardDbEntity> =
+    fun mapDomainToDbList(items: List<MovieCardDomain>): List<MovieCardDb> =
         items.map(::mapDomainToDb)
 
-//    fun mapDomainToDbWithoutIdList(items: List<MovieCardDomainEntity>): List<MovieCardDbEntity> =
-//        items.map(::mapDomainToDbWithoutId)
+    fun mapRemoteToDomainList(items: List<MovieCardRemote>): List<MovieCardDomain> =
+        items.map(::mapRemoteToDomain)
 }

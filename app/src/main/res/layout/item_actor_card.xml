@@ -3,28 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl_item_actor"
-    android:layout_width="150dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground">
 
-    <ImageView
-        android:id="@+id/ivActorPhoto"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:contentDescription="@string/actor_photo"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvActorPhoto"
+        android:layout_width="146dp"
+        android:layout_height="219dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/ic_image_not_found" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvActorName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivActorPhoto"
-        tools:text="Имя Актёра" />
+        <ImageView
+            android:id="@+id/ivActorPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/actor_photo"
+            app:srcCompat="@drawable/ic_image_not_found" />
+
+    </androidx.cardview.widget.CardView>
+
+        <TextView
+            style="@style/fontStyle_1.Bold"
+            android:id="@+id/tvActorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:padding="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvActorPhoto"
+            tools:text="Имя Актёра" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

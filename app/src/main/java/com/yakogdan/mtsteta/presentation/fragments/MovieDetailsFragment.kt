@@ -1,17 +1,22 @@
 package com.yakogdan.mtsteta.presentation.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
-import com.yakogdan.domain.entities.MovieGenreDomainEntity
+import com.yakogdan.domain.entities.moviecards.MovieCardDomain
+import com.yakogdan.domain.entities.moviedetails.MovieDetailsDomain
 import com.yakogdan.mtsteta.databinding.FragmentMovieDetailsBinding
+import com.yakogdan.mtsteta.presentation.adapters.MovieActorsAdapter
 import com.yakogdan.mtsteta.presentation.adapters.MovieGenresAdapter
-import com.yakogdan.mtsteta.presentation.itemdecoration.MovieGenresItemDecoration
+import com.yakogdan.mtsteta.presentation.itemdecoration.HorizontalItemDecoration
+import com.yakogdan.mtsteta.presentation.viewmodels.MovieDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +27,11 @@ class MovieDetailsFragment : Fragment() {
 
     private val bundleArgs: MovieDetailsFragmentArgs by navArgs()
 
+    private val viewModel by viewModels<MovieDetailsViewModel>()
+
     private lateinit var movieGenresAdapter: MovieGenresAdapter
+
+    private lateinit var movieActorsAdapter: MovieActorsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,29 +44,35 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initAdapters()
         bundleArgs.movieCard?.let { movieCard ->
-            with(binding) {
-                tvMovieTitle.text = movieCard.title
-                val date = "22.11.2022"
-                tvDate.text = date
-                tvMovieDescription.text = movieCard.description
-                rb.rating = movieCard.rateScore.toFloat()
-                val ageRestriction = movieCard.ageRestriction.toString() + "+"
-                tvAgeRestriction.text = ageRestriction
-                ivMoviePoster.load(movieCard.posterUrl)
+            val movieId = movieCard.id
+            viewModel.apply {
+                getMovieDetailFromApi(movieId)
+                getMovieActorsFromApi(movieId)
+                Log.d("myTAG", "апи прошёл")
+                movieDetailLiveData.observe(viewLifecycleOwner) { movieDetails ->
+                    setData(movieCard = movieCard, movieDetails = movieDetails)
+                }
             }
         }
-        initAdapter()
-        movieGenresAdapter.setData(
-            listOf(
-                MovieGenreDomainEntity(id = 0, title = "боевик"),
-                MovieGenreDomainEntity(id = 1, title = "комедия")
-            )
-        )
+        viewModel.movieActorsLiveData.observe(viewLifecycleOwner) { movieActors ->
+            movieActorsAdapter.setData(movieActors)
+        }
     }
 
-
-    private fun initAdapter() {
+    private fun setData(movieCard: MovieCardDomain, movieDetails: MovieDetailsDomain) {
+        movieGenresAdapter.setData(movieDetails.genres)
+        with(binding) {
+            ivMoviePoster.load("https://www.themoviedb.org/t/p/w1000_and_h450_multi_faces" + movieCard.posterPath)
+            tvMovieTitle.text = movieDetails.title
+            rb.rating = movieDetails.voteAverage.toFloat() / 2
+            tvDate.text = movieDetails.releaseDate
+            tvAgeRestriction.text = getAgeRestriction(movieDetails.adult)
+            tvMovieDescription.text = movieDetails.description
+        }
+    }
+    private fun initAdapters() {
         movieGenresAdapter = MovieGenresAdapter(
             onItemClickListener = { movieGenres ->
                 Toast.makeText(
@@ -67,11 +82,21 @@ class MovieDetailsFragment : Fragment() {
                 ).show()
             }
         )
+        movieActorsAdapter = MovieActorsAdapter()
         binding.apply {
             rvGenresDM.apply {
                 adapter = movieGenresAdapter
                 addItemDecoration(
-                    MovieGenresItemDecoration(
+                    HorizontalItemDecoration(
+                        startFirst = 54,
+                        endAll = 25
+                    )
+                )
+            }
+            rvActors.apply {
+                adapter = movieActorsAdapter
+                addItemDecoration(
+                    HorizontalItemDecoration(
                         startFirst = 54,
                         endAll = 25
                     )
@@ -79,4 +104,11 @@ class MovieDetailsFragment : Fragment() {
             }
         }
     }
+
+    private fun getAgeRestriction(adult: Boolean): String =
+        if (adult) {
+            "18+"
+        } else {
+            "12+"
+        }
 }

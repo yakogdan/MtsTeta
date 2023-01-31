@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yakogdan.domain.entities.MovieCardDomainEntity
-import com.yakogdan.domain.entities.MovieGenreDomainEntity
+import com.yakogdan.domain.entities.moviecards.MovieCardDomain
+import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.domain.interactors.MovieListInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,8 +20,8 @@ class MovieListViewModel @Inject constructor(
 
     // MovieCard
 
-    val movieCardLiveData: LiveData<List<MovieCardDomainEntity>> get() = _movieCardLiveData
-    private val _movieCardLiveData = MutableLiveData<List<MovieCardDomainEntity>>()
+    private val _movieCardLiveData = MutableLiveData<List<MovieCardDomain>>()
+    val movieCardLiveData: LiveData<List<MovieCardDomain>> get() = _movieCardLiveData
 
     fun getMovieCards() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -33,48 +33,10 @@ class MovieListViewModel @Inject constructor(
         }
     }
 
-//    fun getMovieCardsFromRepo() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.getMovieCardsFromRepo().collect {
-//                withContext(Dispatchers.Main) {
-//                    _movieCardLiveData.value = it
-//                }
-//            }
-//        }
-//    }
-//
-//    fun getMovieCardsFromDB() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.getMovieCardsFromDB().collect {
-//                withContext(Dispatchers.Main) {
-//                    _movieCardLiveData.value = it
-//                }
-//            }
-//        }
-//    }
-//
-//    fun addMovieCard(movieCard: MovieCardDomainEntity) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.addMovieCard(movieCard)
-//        }
-//    }
-//
-//    fun addMovieCards(movieCards: List<MovieCardDomainEntity>) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.addMovieCards(movieCards)
-//        }
-//    }
-//
-//    fun clearMovieCardsDB() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.clearMovieCardsDB()
-//        }
-//    }
-
     // MovieGenre
 
-    private val _movieGenresLiveData = MutableLiveData<List<MovieGenreDomainEntity>>()
-    val movieGenresLiveData: LiveData<List<MovieGenreDomainEntity>> get() = _movieGenresLiveData
+    private val _movieGenresLiveData = MutableLiveData<List<MovieGenreDomain>>()
+    val movieGenresLiveData: LiveData<List<MovieGenreDomain>> get() = _movieGenresLiveData
 
     fun getMovieGenres() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -85,41 +47,4 @@ class MovieListViewModel @Inject constructor(
             }
         }
     }
-//    fun getMovieGenresFromRepo() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.getMovieGenresFromRepo().collect {
-//                withContext(Dispatchers.Main) {
-//                    _movieGenresLiveData.value = it
-//                }
-//            }
-//        }
-//    }
-//
-//    fun getMovieGenresFromDB() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.getMovieGenresFromDB().collect {
-//                withContext(Dispatchers.Main) {
-//                    _movieGenresLiveData.value = it
-//                }
-//            }
-//        }
-//    }
-//
-//    suspend fun addMovieGenre(movieGenre: MovieGenreDomainEntity) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.addMovieGenre(movieGenre)
-//        }
-//    }
-//
-//    suspend fun addMovieGenres(movieGenres: List<MovieGenreDomainEntity>) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.addMovieGenres(movieGenres)
-//        }
-//    }
-//
-//    fun clearMovieGenresDB() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.clearMovieGenresDB()
-//        }
-//    }
 }

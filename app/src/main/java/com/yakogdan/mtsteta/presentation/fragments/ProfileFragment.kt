@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.yakogdan.domain.entities.MovieGenreDomainEntity
+import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.mtsteta.databinding.FragmentProfileBinding
 import com.yakogdan.mtsteta.presentation.adapters.MovieGenresAdapter
-import com.yakogdan.mtsteta.presentation.itemdecoration.MovieGenresItemDecoration
+import com.yakogdan.mtsteta.presentation.itemdecoration.HorizontalItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,8 +35,8 @@ class ProfileFragment : Fragment() {
         initAdapter()
         movieGenresAdapter.setData(
             listOf(
-                MovieGenreDomainEntity(id = 0, title = "боевик"),
-                MovieGenreDomainEntity(id = 1, title = "комедия")
+                MovieGenreDomain(id = 0, title = "боевик"),
+                MovieGenreDomain(id = 1, title = "комедия")
             )
         )
         with(binding) {
@@ -63,7 +63,7 @@ class ProfileFragment : Fragment() {
         binding.rvFavoriteGenres.apply {
             adapter = movieGenresAdapter
             addItemDecoration(
-                MovieGenresItemDecoration(
+                HorizontalItemDecoration(
                     startFirst = 54,
                     endAll = 25
                 )

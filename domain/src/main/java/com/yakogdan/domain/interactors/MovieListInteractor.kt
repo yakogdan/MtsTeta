@@ -1,58 +1,73 @@
 package com.yakogdan.domain.interactors
 
-import com.yakogdan.domain.entities.MovieCardDomainEntity
-import com.yakogdan.domain.entities.MovieGenreDomainEntity
-import com.yakogdan.domain.repositories.MovieListRepository
+import android.util.Log
+import com.yakogdan.domain.entities.moviecards.MovieCardDomain
+import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
+import com.yakogdan.domain.repositories.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MovieListInteractor @Inject constructor(
-    private val movieListRepository: MovieListRepository
+    private val movieRepository: MovieRepository
 ) {
 
     // MovieCard
 
-    private suspend fun getMovieCardsFromRepo(): Flow<List<MovieCardDomainEntity>> =
-        movieListRepository.getMovieCardsFromRepo()
+    private suspend fun getMovieCardsFromApi(): Flow<List<MovieCardDomain>> {
+        return movieRepository.getMovieCardsFromApi()
+    }
 
-    private suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomainEntity>> =
-        movieListRepository.getMovieCardsFromDB()
+    private suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>> =
+        movieRepository.getMovieCardsFromDB()
 
-    suspend fun getMovieCards(): Flow<List<MovieCardDomainEntity>> {
+
+    suspend fun getMovieCards(): Flow<List<MovieCardDomain>> {
         return if (movieCardsDbIsEmpty()) {
-            getMovieCardsFromRepo().collect {
-                addMovieCards(it)
+            try {
+                getMovieCardsFromApi().collect {
+                    addMovieCards(it)
+                }
+                getMovieCardsFromApi()
+            } catch (e: Exception) {
+                Log.e("eTAG", e.message.toString())
+                getMovieCardsFromDB()
             }
-            getMovieCardsFromRepo()
 
         } else {
             getMovieCardsFromDB()
+            try {
+                getMovieCardsFromApi().collect {
+                    clearMovieCardsDB()
+                    addMovieCards(it)
+                }
+                getMovieCardsFromApi()
+            } catch (e: Exception) {
+                Log.e("eTAG", e.message.toString())
+                getMovieCardsFromDB()
+            }
         }
     }
 
-//    suspend fun addMovieCard(movieCard: MovieCardDomainEntity) =
-//        movieListRepository.addMovieCard(movieCard)
+    private suspend fun addMovieCards(movieCards: List<MovieCardDomain>) =
+        movieRepository.addMovieCards(movieCards)
 
-    private suspend fun addMovieCards(movieCards: List<MovieCardDomainEntity>) =
-        movieListRepository.addMovieCards(movieCards)
-
-//    suspend fun clearMovieCardsDB() {
-//        movieListRepository.clearMovieCardsDB()
-//    }
+    private suspend fun clearMovieCardsDB() {
+        movieRepository.clearMovieCardsDB()
+    }
 
     private suspend fun movieCardsDbIsEmpty(): Boolean {
-        return movieListRepository.movieCardsDbIsEmpty()
+        return movieRepository.movieCardsDbIsEmpty()
     }
 
     // MovieGenre
 
-    private suspend fun getMovieGenresFromRepo(): Flow<List<MovieGenreDomainEntity>> =
-        movieListRepository.getMovieGenresFromRepo()
+    private suspend fun getMovieGenresFromRepo(): Flow<List<MovieGenreDomain>> =
+        movieRepository.getMovieGenresFromRepo()
 
-    private suspend fun getMovieGenresFromDB(): Flow<List<MovieGenreDomainEntity>> =
-        movieListRepository.getMovieGenresFromDB()
+    private suspend fun getMovieGenresFromDB(): Flow<List<MovieGenreDomain>> =
+        movieRepository.getMovieGenresFromDB()
 
-    suspend fun getMovieGenres(): Flow<List<MovieGenreDomainEntity>> {
+    suspend fun getMovieGenres(): Flow<List<MovieGenreDomain>> {
         return if (movieGenresDbIsEmpty()) {
             getMovieGenresFromRepo().collect {
                 addMovieGenres(it)
@@ -63,17 +78,10 @@ class MovieListInteractor @Inject constructor(
         }
     }
 
-//    suspend fun addMovieGenre(movieGenre: MovieGenreDomainEntity) =
-//        movieListRepository.addMovieGenre(movieGenre)
-
-    private suspend fun addMovieGenres(movieGenres: List<MovieGenreDomainEntity>) =
-        movieListRepository.addMovieGenres(movieGenres)
-
-//    suspend fun clearMovieGenresDB() {
-//        movieListRepository.clearMovieGenresDB()
-//    }
+    private suspend fun addMovieGenres(movieGenres: List<MovieGenreDomain>) =
+        movieRepository.addMovieGenres(movieGenres)
 
     private suspend fun movieGenresDbIsEmpty(): Boolean {
-        return movieListRepository.movieGenresDbIsEmpty()
+        return movieRepository.movieGenresDbIsEmpty()
     }
 }

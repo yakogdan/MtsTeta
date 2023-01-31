@@ -11,10 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.yakogdan.mtsteta.R
 import com.yakogdan.mtsteta.databinding.FragmentMovieListBinding
-import com.yakogdan.mtsteta.presentation.adapters.MovieCardAdapter
+import com.yakogdan.mtsteta.presentation.adapters.MovieCardsAdapter
 import com.yakogdan.mtsteta.presentation.adapters.MovieGenresAdapter
-import com.yakogdan.mtsteta.presentation.itemdecoration.CardItemDecoration
-import com.yakogdan.mtsteta.presentation.itemdecoration.MovieGenresItemDecoration
+import com.yakogdan.mtsteta.presentation.itemdecoration.GridItemDecoration
+import com.yakogdan.mtsteta.presentation.itemdecoration.HorizontalItemDecoration
 import com.yakogdan.mtsteta.presentation.viewmodels.MovieListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,7 +29,7 @@ class MovieListFragment : Fragment() {
     private val viewModel by viewModels<MovieListViewModel>()
 
     private lateinit var movieGenresAdapter: MovieGenresAdapter
-    private lateinit var movieCardAdapter: MovieCardAdapter
+    private lateinit var movieCardsAdapter: MovieCardsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,24 +42,12 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        if (viewModel.movieCardDbIsEmpty()) {
-//            Log.d("myTAG", "dbIsEmpty = true")
-//            Toast.makeText(context, "repo", Toast.LENGTH_SHORT).show()
-//            viewModel.getMovieCardsFromRepo()
-//            viewModel.movieCardLiveData.observe(viewLifecycleOwner) { movieCards ->
-//                viewModel.addMovieCards(movieCards)
-//            }
-//        } else {
-//            Log.d("myTAG", "dbIsEmpty = false")
-//            Toast.makeText(context, "db", Toast.LENGTH_SHORT).show()
-//            viewModel.getMovieCardsFromDB()
-//        }
-        viewModel.getMovieCards()
         viewModel.getMovieGenres()
+        viewModel.getMovieCards()
         initAdapters()
 
         viewModel.movieCardLiveData.observe(viewLifecycleOwner) { movieCards ->
-            movieCardAdapter.setData(movieCards)
+            movieCardsAdapter.setData(movieCards)
         }
         viewModel.movieGenresLiveData.observe(viewLifecycleOwner) { movieGenres ->
             movieGenresAdapter.setData(movieGenres)
@@ -76,7 +64,7 @@ class MovieListFragment : Fragment() {
                 ).show()
             }
         )
-        movieCardAdapter = MovieCardAdapter(
+        movieCardsAdapter = MovieCardsAdapter(
             onItemClickListener = { movieCard ->
                 navController?.navigate(
                     R.id.action_movieListFragment_to_movieDetailsFragment,
@@ -88,16 +76,16 @@ class MovieListFragment : Fragment() {
             rvMovieGenres.apply {
                 adapter = movieGenresAdapter
                 addItemDecoration(
-                    MovieGenresItemDecoration(
+                    HorizontalItemDecoration(
                         startFirst = 54,
                         endAll = 25
                     )
                 )
             }
             rvMovieCard.apply {
-                adapter = movieCardAdapter
+                adapter = movieCardsAdapter
                 addItemDecoration(
-                    CardItemDecoration(
+                    GridItemDecoration(
                         start = 28,
                         end = 28,
                         bottom = 100
