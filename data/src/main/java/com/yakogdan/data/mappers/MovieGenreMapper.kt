@@ -11,7 +11,7 @@ object MovieGenreMapper {
             title = movieGenreDb.title
         )
 
-    fun mapDomainToDb(movieGenreDomain: MovieGenreDomain): MovieGenreDb =
+    private fun mapDomainToDb(movieGenreDomain: MovieGenreDomain): MovieGenreDb =
         MovieGenreDb(
             id = movieGenreDomain.id,
             title = movieGenreDomain.title

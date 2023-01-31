@@ -17,12 +17,6 @@ interface MovieGenreDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addMovieGenres(movieGenres: List<MovieGenreDb>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addMovieGenre(movieGenre: MovieGenreDb)
-
-    @Query("DELETE FROM $TABLE_NAME")
-    suspend fun clearAllDB()
-
     @Query("SELECT (SELECT COUNT(*) FROM $TABLE_NAME) == 0")
     suspend fun isEmpty(): Boolean
 }

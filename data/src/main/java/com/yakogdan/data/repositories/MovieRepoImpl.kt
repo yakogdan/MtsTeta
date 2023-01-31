@@ -1,6 +1,5 @@
 package com.yakogdan.data.repositories
 
-import android.util.Log
 import com.yakogdan.data.database.room.dao.MovieCardDao
 import com.yakogdan.data.database.room.dao.MovieGenreDao
 import com.yakogdan.data.mappers.MovieActorMapper
@@ -66,7 +65,6 @@ class MovieRepoImpl @Inject constructor(
     }
 
     override suspend fun addMovieCards(movieCards: List<MovieCardDomain>) {
-        Log.d("myTAG", "addMovieCards: repoimpl")
         movieCardDao.addMovieCards(MovieCardMapper.mapDomainToDbList(movieCards))
     }
 
@@ -100,10 +98,6 @@ class MovieRepoImpl @Inject constructor(
 
     override suspend fun addMovieGenres(movieGenres: List<MovieGenreDomain>) {
         movieGenreDao.addMovieGenres(MovieGenreMapper.mapDomainToDbList(movieGenres))
-    }
-
-    override suspend fun clearMovieGenresDB() {
-        movieGenreDao.clearAllDB()
     }
 
     override suspend fun movieGenresDbIsEmpty() =

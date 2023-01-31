@@ -41,8 +41,7 @@ class MovieDetailsViewModel @Inject constructor(
     fun getMovieActorsFromApi(movieId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                movieDetailsInteractor.getMovieActorsFromApi(movieId)
-                    .collect() {
+                movieDetailsInteractor.getMovieActorsFromApi(movieId).collect {
                         withContext(Dispatchers.Main) {
                             _movieActorsLiveData.value = it
                         }

@@ -26,7 +26,7 @@ object MovieCardMapper {
             posterPath = movieCardDomain.posterPath
         )
 
-    fun mapRemoteToDomain(movieCardRemote: MovieCardRemote): MovieCardDomain =
+    private fun mapRemoteToDomain(movieCardRemote: MovieCardRemote): MovieCardDomain =
         MovieCardDomain(
             id = movieCardRemote.id,
             title = movieCardRemote.title,
@@ -36,21 +36,9 @@ object MovieCardMapper {
             posterPath = movieCardRemote.posterPath
         )
 
-//    fun mapDomainToDbWithoutId(movieCardDomainEntity: MovieCardDomainEntity): MovieCardDbEntity =
-//        MovieCardDbEntity(
-//            title = movieCardDomainEntity.title,
-//            description = movieCardDomainEntity.description,
-//            rateScore = movieCardDomainEntity.rateScore,
-//            ageRestriction = movieCardDomainEntity.ageRestriction,
-//            posterUrl = movieCardDomainEntity.posterUrl
-//        )
-
     fun mapDomainToDbList(items: List<MovieCardDomain>): List<MovieCardDb> =
         items.map(::mapDomainToDb)
 
     fun mapRemoteToDomainList(items: List<MovieCardRemote>): List<MovieCardDomain> =
         items.map(::mapRemoteToDomain)
-
-//    fun mapDomainToDbWithoutIdList(items: List<MovieCardDomainEntity>): List<MovieCardDbEntity> =
-//        items.map(::mapDomainToDbWithoutId)
 }

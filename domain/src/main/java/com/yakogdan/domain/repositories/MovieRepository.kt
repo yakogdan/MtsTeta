@@ -28,8 +28,6 @@ interface MovieRepository {
 
     suspend fun addMovieGenres(movieGenres: List<MovieGenreDomain>)
 
-    suspend fun clearMovieGenresDB()
-
     suspend fun movieGenresDbIsEmpty(): Boolean
 
     // MovieDetails

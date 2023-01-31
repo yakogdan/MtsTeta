@@ -33,42 +33,6 @@ class MovieListViewModel @Inject constructor(
         }
     }
 
-//    fun getMovieCardsFromApi() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            try {
-//                movieListInteractor.getMovieCardsFromApi().collect {
-//                    withContext(Dispatchers.Main) {
-//                        _movieCardLiveData.value = it
-//                    }
-//                }
-//            } catch (e: Exception) {
-//                Log.e("eTAG", "getMovieCardsFromApi: не работает ниче")
-//            }
-//        }
-//    }
-
-//    fun getMovieCardsFromDB() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.getMovieCardsFromDB().collect {
-//                withContext(Dispatchers.Main) {
-//                    _movieCardLiveData.value = it
-//                }
-//            }
-//        }
-//    }
-
-//    fun addMovieCards(movieCards: List<MovieCardDomainEntity>) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.addMovieCards(movieCards)
-//        }
-//    }
-//
-//    fun clearMovieCardsDB() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.clearMovieCardsDB()
-//        }
-//    }
-
     // MovieGenre
 
     private val _movieGenresLiveData = MutableLiveData<List<MovieGenreDomain>>()
@@ -83,26 +47,4 @@ class MovieListViewModel @Inject constructor(
             }
         }
     }
-
-//    fun getMovieGenresFromDB() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.getMovieGenresFromDB().collect {
-//                withContext(Dispatchers.Main) {
-//                    _movieGenresLiveData.value = it
-//                }
-//            }
-//        }
-//    }
-//
-//    suspend fun addMovieGenres(movieGenres: List<MovieGenreDomainEntity>) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.addMovieGenres(movieGenres)
-//        }
-//    }
-//
-//    fun clearMovieGenresDB() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            movieListInteractor.clearMovieGenresDB()
-//        }
-//    }
 }

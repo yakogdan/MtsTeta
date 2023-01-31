@@ -1,8 +1,8 @@
 package com.yakogdan.data.remote.api
 
 import com.yakogdan.data.remote.entities.movieactors.MovieActorsRemote
-import com.yakogdan.data.remote.entities.moviedetails.MovieDetailsRemote
 import com.yakogdan.data.remote.entities.moviecards.MovieCardsRemote
+import com.yakogdan.data.remote.entities.moviedetails.MovieDetailsRemote
 import com.yakogdan.data.remote.utils.RetrofitExtensions.Companion.addJsonConverter
 import com.yakogdan.data.remote.utils.RetrofitExtensions.Companion.setClient
 import retrofit2.Response

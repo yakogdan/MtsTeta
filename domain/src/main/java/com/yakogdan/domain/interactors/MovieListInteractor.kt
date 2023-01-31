@@ -14,10 +14,8 @@ class MovieListInteractor @Inject constructor(
     // MovieCard
 
     private suspend fun getMovieCardsFromApi(): Flow<List<MovieCardDomain>> {
-        Log.d("myTAG", "getMovieCardsFromApi: interactor")
         return movieRepository.getMovieCardsFromApi()
     }
-
 
     private suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>> =
         movieRepository.getMovieCardsFromDB()
@@ -82,10 +80,6 @@ class MovieListInteractor @Inject constructor(
 
     private suspend fun addMovieGenres(movieGenres: List<MovieGenreDomain>) =
         movieRepository.addMovieGenres(movieGenres)
-
-//    suspend fun clearMovieGenresDB() {
-//        movieListRepository.clearMovieGenresDB()
-//    }
 
     private suspend fun movieGenresDbIsEmpty(): Boolean {
         return movieRepository.movieGenresDbIsEmpty()

@@ -17,9 +17,6 @@ interface MovieCardDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addMovieCards(movieCards: List<MovieCardDb>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addMovieCard(movieCard: MovieCardDb)
-
     @Query("DELETE FROM $TABLE_NAME")
     suspend fun clearAllDB()
 

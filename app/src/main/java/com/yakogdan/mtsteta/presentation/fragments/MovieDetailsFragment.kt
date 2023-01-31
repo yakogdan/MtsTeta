@@ -65,19 +65,6 @@ class MovieDetailsFragment : Fragment() {
         viewModel.movieActorsLiveData.observe(viewLifecycleOwner) { movieActors ->
             movieActorsAdapter.setData(movieActors)
         }
-//        movieActorsAdapter.setData(
-//            MovieActorsDomain(listOf(
-//                ActorDomain(
-//                    name = "LKDSj",
-//                    profilePath = "/iWIUEwgn2KW50MssR7tdPeFoRGW.jpg"
-//                ),
-//                ActorDomain(
-//                    name = "LKDfghjfgSj",
-//                    profilePath = "/iWIUEwgn2KW50MssR7tdPeFoRGW.jpg"
-//                )
-//            ),
-//            1)
-//        )
     }
 
     private fun initAdapters() {
