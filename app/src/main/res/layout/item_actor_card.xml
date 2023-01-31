@@ -8,7 +8,7 @@
     android:background="?attr/selectableItemBackground">
 
     <ImageView
-        android:id="@+id/iv_actor_photo"
+        android:id="@+id/ivActorPhoto"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:contentDescription="@string/actor_photo"
@@ -18,13 +18,13 @@
         tools:srcCompat="@drawable/ic_image_not_found" />
 
     <TextView
-        android:id="@+id/tv_actor_name"
+        android:id="@+id/tvActorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_actor_photo"
+        app:layout_constraintTop_toBottomOf="@id/ivActorPhoto"
         tools:text="Имя Актёра" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
