@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Factorial Test"
+rootProject.name = "MtsTeta"
 include(":app")
 include(":data")
 include(":domain")
