@@ -1,8 +1,8 @@
 pluginManagement {
     repositories {
-        gradlePluginPortal()
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 dependencyResolutionManagement {
@@ -12,7 +12,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "MtsTeta"
-include ':app'
-include ':data'
-include ':domain'
+
+rootProject.name = "Factorial Test"
+include(":app")
+include(":data")
+include(":domain")
