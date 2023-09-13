@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yakogdan.domain.entities.moviecards.MovieCardDomain
 import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.domain.interactors.MovieListInteractor
+import com.yakogdan.mtsteta.presentation.screenstates.MovieListScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -20,14 +21,20 @@ class MovieListViewModel @Inject constructor(
 
     // MovieCard
 
-    private val _movieCardLiveData = MutableLiveData<List<MovieCardDomain>>()
-    val movieCardLiveData: LiveData<List<MovieCardDomain>> get() = _movieCardLiveData
+    private val _movieListScreenStateLD = MutableLiveData<MovieListScreenState>()
+    val movieListScreenStateLD: LiveData<MovieListScreenState> get() = _movieListScreenStateLD
 
     fun getMovieCards() {
         viewModelScope.launch(Dispatchers.IO) {
             movieListInteractor.getMovieCards().collect {
                 withContext(Dispatchers.Main) {
-                    _movieCardLiveData.value = it
+                    _movieListScreenStateLD.value = MovieListScreenState.Loading
+                    delay(5000)
+                    if (it.isEmpty()) {
+                        _movieListScreenStateLD.value = MovieListScreenState.Error
+                    } else {
+                        _movieListScreenStateLD.value = MovieListScreenState.Result(it)
+                    }
                 }
             }
         }

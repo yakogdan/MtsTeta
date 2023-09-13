@@ -15,6 +15,7 @@ import com.yakogdan.mtsteta.presentation.adapters.MovieCardsAdapter
 import com.yakogdan.mtsteta.presentation.adapters.MovieGenresAdapter
 import com.yakogdan.mtsteta.presentation.itemdecoration.GridItemDecoration
 import com.yakogdan.mtsteta.presentation.itemdecoration.HorizontalItemDecoration
+import com.yakogdan.mtsteta.presentation.screenstates.MovieListScreenState
 import com.yakogdan.mtsteta.presentation.viewmodels.MovieListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,9 +46,22 @@ class MovieListFragment : Fragment() {
         viewModel.getMovieGenres()
         viewModel.getMovieCards()
         initAdapters()
-
-        viewModel.movieCardLiveData.observe(viewLifecycleOwner) { movieCards ->
-            movieCardsAdapter.setData(movieCards)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getMovieCards()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
+        viewModel.movieListScreenStateLD.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is MovieListScreenState.Error -> {
+                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                }
+                is MovieListScreenState.Loading -> {
+                    Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
+                }
+                is MovieListScreenState.Result -> {
+                    movieCardsAdapter.setData(state.list)
+                }
+            }
         }
         viewModel.movieGenresLiveData.observe(viewLifecycleOwner) { movieGenres ->
             movieGenresAdapter.setData(movieGenres)
