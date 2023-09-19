@@ -23,18 +23,18 @@ class MovieListInteractor @Inject constructor(
 
     suspend fun getMovieCards(): Flow<List<MovieCardDomain>> {
         return if (movieCardsDbIsEmpty()) {
-            try {
-                getMovieCardsFromApi().collect {
+            try { // try catch убрать, обрабатывать исключения нужно в коллекторе, чтобы не нарушать принципы прозрачности исключений
+                val movieCards = getMovieCardsFromApi()
+                movieCards.collect {
                     addMovieCards(it)
                 }
-                getMovieCardsFromApi()
+                movieCards
             } catch (e: Exception) {
                 Log.e("eTAG", e.message.toString())
                 getMovieCardsFromDB()
             }
 
         } else {
-            getMovieCardsFromDB()
             try {
                 getMovieCardsFromApi().collect {
                     clearMovieCardsDB()

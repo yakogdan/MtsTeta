@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.yakogdan.mtsteta.R
 import com.yakogdan.mtsteta.databinding.FragmentMovieListBinding
@@ -18,6 +19,7 @@ import com.yakogdan.mtsteta.presentation.itemdecoration.HorizontalItemDecoration
 import com.yakogdan.mtsteta.presentation.screenstates.MovieListScreenState
 import com.yakogdan.mtsteta.presentation.viewmodels.MovieListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MovieListFragment : Fragment() {
@@ -50,21 +52,25 @@ class MovieListFragment : Fragment() {
             viewModel.getMovieCards()
             binding.swipeRefreshLayout.isRefreshing = false
         }
-        viewModel.movieListScreenStateLD.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is MovieListScreenState.Error -> {
-                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-                }
-                is MovieListScreenState.Loading -> {
-                    Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
-                }
-                is MovieListScreenState.Result -> {
-                    movieCardsAdapter.setData(state.list)
+        lifecycleScope.launch {
+            viewModel.movieListStateFlow.collect { state ->
+                when (state) {
+                    is MovieListScreenState.Error -> {
+                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                    }
+                    is MovieListScreenState.Loading -> {
+                        Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
+                    }
+                    is MovieListScreenState.Result -> {
+                        movieCardsAdapter.setData(state.list)
+                    }
                 }
             }
         }
-        viewModel.movieGenresLiveData.observe(viewLifecycleOwner) { movieGenres ->
-            movieGenresAdapter.setData(movieGenres)
+        lifecycleScope.launch {
+            viewModel.movieGenresStateFlow.collect { movieGenres ->
+                movieGenresAdapter.setData(movieGenres)
+            }
         }
     }
 
