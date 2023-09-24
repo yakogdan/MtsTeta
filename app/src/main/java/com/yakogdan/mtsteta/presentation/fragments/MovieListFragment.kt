@@ -50,19 +50,23 @@ class MovieListFragment : Fragment() {
         initAdapters()
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getMovieCards()
-            binding.swipeRefreshLayout.isRefreshing = false
         }
         lifecycleScope.launch {
             viewModel.movieListStateFlow.collect { state ->
                 when (state) {
                     is MovieListScreenState.Error -> {
-                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Ошибка загрузки. Включите VPN.", Toast.LENGTH_LONG)
+                            .show()
+                        binding.swipeRefreshLayout.isRefreshing = false
                     }
+
                     is MovieListScreenState.Loading -> {
-                        Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
+                        binding.swipeRefreshLayout.isRefreshing = true
                     }
+
                     is MovieListScreenState.Result -> {
                         movieCardsAdapter.setData(state.list)
+                        binding.swipeRefreshLayout.isRefreshing = false
                     }
                 }
             }

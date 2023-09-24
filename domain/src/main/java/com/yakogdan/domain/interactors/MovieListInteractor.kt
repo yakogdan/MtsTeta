@@ -13,7 +13,7 @@ class MovieListInteractor @Inject constructor(
 
     // MovieCard
 
-    private suspend fun getMovieCardsFromApi(): Flow<List<MovieCardDomain>> {
+    suspend fun getMovieCardsFromApi(): Flow<List<MovieCardDomain>> {
         return movieRepository.getMovieCardsFromApi()
     }
 
