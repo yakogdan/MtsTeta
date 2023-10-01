@@ -9,9 +9,9 @@ import javax.inject.Inject
 class MovieDetailsInteractor @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend fun getMovieDetailFromApi(movieId: Long): Flow<MovieDetailsDomain> =
+    suspend fun getMovieDetailsFromApi(movieId: Long): Flow<MovieDetailsDomain> =
         movieRepository.getMovieDetailsFromApi(movieId)
 
-    suspend fun getMovieActorsFromApi(movieId: Long): Flow<List<MovieActorDomain>?> =
+    suspend fun getMovieActorsFromApi(movieId: Long): Flow<List<MovieActorDomain>> =
         movieRepository.getMovieActorsFromApi(movieId)
 }

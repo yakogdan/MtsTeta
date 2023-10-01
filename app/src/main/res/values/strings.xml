@@ -35,4 +35,6 @@
     <string name="ask_a_question">Задать вопрос</string>
     <string name="report_a_problem">Сообщить о проблеме</string>
     <string name="sign_out">Выйти</string>
+    <string name="loading_error">Ошибка загрузки. Включите VPN.</string>
+    <string name="loading">Загрузка…</string>
 </resources>

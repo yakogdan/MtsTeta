@@ -35,9 +35,7 @@ class MovieListFragment : Fragment() {
     private lateinit var movieCardsAdapter: MovieCardsAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieListBinding.inflate(layoutInflater, container, false)
         return binding.root
@@ -53,22 +51,7 @@ class MovieListFragment : Fragment() {
         }
         lifecycleScope.launch {
             viewModel.movieListStateFlow.collect { state ->
-                when (state) {
-                    is MovieListScreenState.Error -> {
-                        Toast.makeText(context, "Ошибка загрузки. Включите VPN.", Toast.LENGTH_LONG)
-                            .show()
-                        binding.swipeRefreshLayout.isRefreshing = false
-                    }
-
-                    is MovieListScreenState.Loading -> {
-                        binding.swipeRefreshLayout.isRefreshing = true
-                    }
-
-                    is MovieListScreenState.Result -> {
-                        movieCardsAdapter.setData(state.list)
-                        binding.swipeRefreshLayout.isRefreshing = false
-                    }
-                }
+                processMovieListState(state)
             }
         }
         lifecycleScope.launch {
@@ -78,31 +61,42 @@ class MovieListFragment : Fragment() {
         }
     }
 
+    private fun processMovieListState(state: MovieListScreenState) {
+        when (state) {
+            MovieListScreenState.Error -> {
+                Toast.makeText(context, getString(R.string.loading_error), Toast.LENGTH_LONG).show()
+                binding.swipeRefreshLayout.isRefreshing = false
+            }
+
+            MovieListScreenState.Loading -> {
+                binding.swipeRefreshLayout.isRefreshing = true
+            }
+
+            is MovieListScreenState.Result -> {
+                movieCardsAdapter.setData(state.list)
+                binding.swipeRefreshLayout.isRefreshing = false
+            }
+        }
+    }
+
     private fun initAdapters() {
-        movieGenresAdapter = MovieGenresAdapter(
-            onItemClickListener = { movieGenres ->
-                Toast.makeText(
-                    context,
-                    movieGenres.title,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        )
-        movieCardsAdapter = MovieCardsAdapter(
-            onItemClickListener = { movieCard ->
-                navController?.navigate(
-                    R.id.action_movieListFragment_to_movieDetailsFragment,
-                    bundleOf("movieCard" to movieCard)
-                )
-            }
-        )
+        movieGenresAdapter = MovieGenresAdapter(onItemClickListener = { movieGenres ->
+            Toast.makeText(
+                context, movieGenres.title, Toast.LENGTH_SHORT
+            ).show()
+        })
+        movieCardsAdapter = MovieCardsAdapter(onItemClickListener = { movieCard ->
+            navController?.navigate(
+                R.id.action_movieListFragment_to_movieDetailsFragment,
+                bundleOf("movieCard" to movieCard)
+            )
+        })
         binding.apply {
             rvMovieGenres.apply {
                 adapter = movieGenresAdapter
                 addItemDecoration(
                     HorizontalItemDecoration(
-                        startFirst = 54,
-                        endAll = 25
+                        startFirst = 54, endAll = 25
                     )
                 )
             }
@@ -110,9 +104,7 @@ class MovieListFragment : Fragment() {
                 adapter = movieCardsAdapter
                 addItemDecoration(
                     GridItemDecoration(
-                        start = 28,
-                        end = 28,
-                        bottom = 100
+                        start = 28, end = 28, bottom = 100
                     )
                 )
             }

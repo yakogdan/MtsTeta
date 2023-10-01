@@ -11,6 +11,6 @@ object MovieActorMapper {
             profilePath = movieActorRemote.profilePath
         )
 
-    fun mapActorRemoteToDomainList(items: List<MovieActorRemote>?): List<MovieActorDomain>? =
-        items?.map(MovieActorMapper::mapActorRemoteToDomain)
+    fun mapActorRemoteToDomainList(items: List<MovieActorRemote>): List<MovieActorDomain> =
+        items.map(MovieActorMapper::mapActorRemoteToDomain)
 }

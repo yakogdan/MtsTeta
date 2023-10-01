@@ -1,6 +1,5 @@
 package com.yakogdan.domain.interactors
 
-import android.util.Log
 import com.yakogdan.domain.entities.moviecards.MovieCardDomain
 import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.domain.repositories.MovieRepository
@@ -13,49 +12,21 @@ class MovieListInteractor @Inject constructor(
 
     // MovieCard
 
-    suspend fun getMovieCardsFromApi(): Flow<List<MovieCardDomain>> {
-        return movieRepository.getMovieCardsFromApi()
-    }
+    suspend fun getMovieCardsFromApi(): Flow<List<MovieCardDomain>> =
+        movieRepository.getMovieCardsFromApi()
 
-    private suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>> =
+
+    suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>> =
         movieRepository.getMovieCardsFromDB()
-
-
-    suspend fun getMovieCards(): Flow<List<MovieCardDomain>> {
-        return if (movieCardsDbIsEmpty()) {
-            try { // try catch убрать, обрабатывать исключения нужно в коллекторе, чтобы не нарушать принципы прозрачности исключений
-                val movieCards = getMovieCardsFromApi()
-                movieCards.collect {
-                    addMovieCards(it)
-                }
-                movieCards
-            } catch (e: Exception) {
-                Log.e("eTAG", e.message.toString())
-                getMovieCardsFromDB()
-            }
-
-        } else {
-            try {
-                getMovieCardsFromApi().collect {
-                    clearMovieCardsDB()
-                    addMovieCards(it)
-                }
-                getMovieCardsFromApi()
-            } catch (e: Exception) {
-                Log.e("eTAG", e.message.toString())
-                getMovieCardsFromDB()
-            }
-        }
-    }
 
     private suspend fun addMovieCards(movieCards: List<MovieCardDomain>) =
         movieRepository.addMovieCards(movieCards)
 
-    private suspend fun clearMovieCardsDB() {
+    suspend fun clearMovieCardsDB() {
         movieRepository.clearMovieCardsDB()
     }
 
-    private suspend fun movieCardsDbIsEmpty(): Boolean {
+    suspend fun movieCardsDbIsEmpty(): Boolean {
         return movieRepository.movieCardsDbIsEmpty()
     }
 

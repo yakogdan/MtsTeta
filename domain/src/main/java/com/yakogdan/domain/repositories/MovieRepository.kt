@@ -36,5 +36,5 @@ interface MovieRepository {
 
     // MovieActors
 
-    suspend fun getMovieActorsFromApi(movieId: Long): Flow<List<MovieActorDomain>?>
+    suspend fun getMovieActorsFromApi(movieId: Long): Flow<List<MovieActorDomain>>
 }

@@ -3,7 +3,7 @@ package com.yakogdan.data.mappers
 import com.yakogdan.data.remote.entities.moviedetails.MovieDetailsRemote
 import com.yakogdan.domain.entities.moviedetails.MovieDetailsDomain
 
-object MovieDetailMapper {
+object MovieDetailsMapper {
 
     fun mapRemoteToDomain(movieDetail: MovieDetailsRemote): MovieDetailsDomain =
         MovieDetailsDomain(

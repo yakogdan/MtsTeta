@@ -4,7 +4,7 @@ import com.yakogdan.data.database.room.dao.MovieCardDao
 import com.yakogdan.data.database.room.dao.MovieGenreDao
 import com.yakogdan.data.mappers.MovieActorMapper
 import com.yakogdan.data.mappers.MovieCardMapper
-import com.yakogdan.data.mappers.MovieDetailMapper
+import com.yakogdan.data.mappers.MovieDetailsMapper
 import com.yakogdan.data.mappers.MovieGenreMapper
 import com.yakogdan.data.remote.api.TheMovieDbApi
 import com.yakogdan.data.remote.entities.movieactors.MovieActorsRemote
@@ -19,6 +19,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 class MovieRepoImpl @Inject constructor(
     private val movieCardDao: MovieCardDao,
@@ -37,7 +39,7 @@ class MovieRepoImpl @Inject constructor(
         val response = theMovieDbApi.getPopularMovies(
             apiKey = API_KEY,
             language = LANGUAGE,
-            page = 2
+            page = Random.nextInt(1..9)
         ).body()
             ?: MovieCardsRemote()
 
@@ -51,10 +53,10 @@ class MovieRepoImpl @Inject constructor(
             language = LANGUAGE
         ).body()
             ?: MovieDetailsRemote()
-        return flowOf(MovieDetailMapper.mapRemoteToDomain(response))
+        return flowOf(MovieDetailsMapper.mapRemoteToDomain(response))
     }
 
-    override suspend fun getMovieActorsFromApi(movieId: Long): Flow<List<MovieActorDomain>?> {
+    override suspend fun getMovieActorsFromApi(movieId: Long): Flow<List<MovieActorDomain>> {
         val response = theMovieDbApi.getMovieActors(
             movieId = movieId,
             apiKey = API_KEY,
