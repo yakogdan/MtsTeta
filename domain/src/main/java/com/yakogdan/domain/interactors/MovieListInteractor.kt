@@ -19,12 +19,8 @@ class MovieListInteractor @Inject constructor(
     suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>> =
         movieRepository.getMovieCardsFromDB()
 
-    private suspend fun addMovieCards(movieCards: List<MovieCardDomain>) =
-        movieRepository.addMovieCards(movieCards)
-
-    suspend fun clearMovieCardsDB() {
-        movieRepository.clearMovieCardsDB()
-    }
+    private suspend fun addMovieCard(movieCard: MovieCardDomain) =
+        movieRepository.addMovieCard(movieCard)
 
     suspend fun movieCardsDbIsEmpty(): Boolean {
         return movieRepository.movieCardsDbIsEmpty()

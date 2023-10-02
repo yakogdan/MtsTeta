@@ -1,6 +1,7 @@
 package com.yakogdan.data.database.room.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -15,7 +16,10 @@ interface MovieCardDao {
     fun getMovieCards(): Flow<List<MovieCardDb>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addMovieCards(movieCards: List<MovieCardDb>)
+    suspend fun addMovieCard(movieCard: MovieCardDb)
+
+    @Delete
+    suspend fun deleteMovieCard(movieCard: MovieCardDb)
 
     @Query("DELETE FROM $TABLE_NAME")
     suspend fun clearAllDB()

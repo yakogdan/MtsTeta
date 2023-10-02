@@ -5,7 +5,7 @@
     <string name="main_empty_message">Тут должен был быть текст</string>
     <string name="star">Звезда</string>
     <string name="movie_description">Эйч — загадочный и холодный на вид джентльмен, но внутри него пылает жажда справедливости. Преследуя свои мотивы, он внедряется в инкассаторскую компанию, чтобы выйти на соучастников серии многомиллионных ограблений, потрясших Лос-Анджелес. В этой запутанной игре у каждого своя роль, но под подозрением оказываются все. Виновных же обязательно постигнет гнев человеческий.</string>
-    <string name="actors">Актеры</string>
+    <string name="actors">Актёры</string>
     <string name="jason_statham">Джейсон Стэйтем</string>
     <string name="holt_mccallany">Холт Маккэллани</string>
     <string name="joshua_hartnett">Джош Хартнетт</string>
@@ -37,4 +37,5 @@
     <string name="sign_out">Выйти</string>
     <string name="loading_error">Ошибка загрузки. Включите VPN.</string>
     <string name="loading">Загрузка…</string>
+    <string name="favotire">Избранное</string>
 </resources>

@@ -85,12 +85,15 @@ class MovieListFragment : Fragment() {
                 context, movieGenres.title, Toast.LENGTH_SHORT
             ).show()
         })
-        movieCardsAdapter = MovieCardsAdapter(onItemClickListener = { movieCard ->
-            navController?.navigate(
-                R.id.action_movieListFragment_to_movieDetailsFragment,
-                bundleOf("movieCard" to movieCard)
-            )
-        })
+        movieCardsAdapter = MovieCardsAdapter(
+            onItemClickListener = { movieCard ->
+                navController?.navigate(
+                    R.id.action_movieListFragment_to_movieDetailsFragment,
+                    bundleOf("movieCard" to movieCard)
+                )
+            },
+            onItemLongClickListener = {Toast.makeText(context, "toast from list", Toast.LENGTH_SHORT).show()}
+        )
         binding.apply {
             rvMovieGenres.apply {
                 adapter = movieGenresAdapter

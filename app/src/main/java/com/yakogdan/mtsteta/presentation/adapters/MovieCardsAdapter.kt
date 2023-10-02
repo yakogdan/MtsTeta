@@ -13,7 +13,8 @@ import com.yakogdan.mtsteta.R
 import com.yakogdan.mtsteta.databinding.ItemMovieCardBinding
 
 class MovieCardsAdapter(
-    private var onItemClickListener: (MovieCardDomain) -> Unit
+    private var onItemClickListener: (MovieCardDomain) -> Unit,
+    private var onItemLongClickListener: (MovieCardDomain) -> Unit
 ) : RecyclerView.Adapter<MovieCardsAdapter.MovieCardViewHolder>() {
 
     inner class MovieCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -22,13 +23,18 @@ class MovieCardsAdapter(
 
         fun bind(movieCard: MovieCardDomain) {
             binding.apply {
-                ivItemMoviePoster.load("https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + movieCard.posterPath)
+                ivItemMoviePoster
+                    .load("https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + movieCard.posterPath)
                 tvItemMovieTitle.text = movieCard.title
                 tvItemMovieDescription.text = movieCard.description
                 tvAgeRestriction.text = getAgeRestriction(movieCard)
                 rbMovie.rating = movieCard.voteAverage.toFloat() / 2
                 root.setOnClickListener {
                     onItemClickListener(movieCard)
+                }
+                root.setOnLongClickListener {
+                    onItemLongClickListener(movieCard)
+                    return@setOnLongClickListener true
                 }
             }
         }
@@ -44,16 +50,14 @@ class MovieCardsAdapter(
 
     private val callback = object : DiffUtil.ItemCallback<MovieCardDomain>() {
         override fun areItemsTheSame(
-            oldItem: MovieCardDomain,
-            newItem: MovieCardDomain
+            oldItem: MovieCardDomain, newItem: MovieCardDomain
         ): Boolean {
             return oldItem.title == newItem.title
         }
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(
-            oldItem: MovieCardDomain,
-            newItem: MovieCardDomain
+            oldItem: MovieCardDomain, newItem: MovieCardDomain
         ): Boolean {
             return oldItem == newItem
         }
@@ -67,13 +71,9 @@ class MovieCardsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieCardViewHolder =
         MovieCardViewHolder(
-            LayoutInflater
-                .from(parent.context)
-                .inflate(
-                    R.layout.item_movie_card,
-                    parent,
-                    false
-                )
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_movie_card, parent, false
+            )
         )
 
 

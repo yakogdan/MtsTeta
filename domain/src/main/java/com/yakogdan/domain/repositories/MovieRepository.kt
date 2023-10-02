@@ -14,9 +14,9 @@ interface MovieRepository {
 
     suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>>
 
-    suspend fun addMovieCards(movieCards: List<MovieCardDomain>)
+    suspend fun addMovieCard(movieCard: MovieCardDomain)
 
-    suspend fun clearMovieCardsDB()
+    suspend fun deleteMovieCard(movieCard: MovieCardDomain)
 
     suspend fun movieCardsDbIsEmpty(): Boolean
 

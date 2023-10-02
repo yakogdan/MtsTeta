@@ -66,17 +66,16 @@ class MovieRepoImpl @Inject constructor(
         return flowOf(MovieActorMapper.mapActorRemoteToDomainList(response.actors))
     }
 
-    override suspend fun addMovieCards(movieCards: List<MovieCardDomain>) {
-        movieCardDao.addMovieCards(MovieCardMapper.mapDomainToDbList(movieCards))
+    override suspend fun addMovieCard(movieCard: MovieCardDomain) {
+        movieCardDao.addMovieCard(MovieCardMapper.mapDomainToDb(movieCard))
     }
 
-    override suspend fun clearMovieCardsDB() {
-        movieCardDao.clearAllDB()
+    override suspend fun deleteMovieCard(movieCard: MovieCardDomain) {
+        movieCardDao.deleteMovieCard(MovieCardMapper.mapDomainToDb(movieCard))
     }
 
     override suspend fun movieCardsDbIsEmpty() =
         movieCardDao.isEmpty()
-
 
     // MovieGenre
 

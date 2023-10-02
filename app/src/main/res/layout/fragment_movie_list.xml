@@ -52,7 +52,4 @@
             tools:listitem="@layout/item_movie_card" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

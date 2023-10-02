@@ -26,15 +26,18 @@
             app:destination="@id/movieDetailsFragment" />
         <action
             android:id="@+id/action_movieListFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.yakogdan.mtsteta.presentation.fragments.ProfileFragment"
-        android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile">
+        android:id="@+id/favoriteFragment"
+        android:name="com.yakogdan.mtsteta.presentation.fragments.FavoriteFragment"
+        android:label="FavoriteFragment"
+        tools:layout="@layout/fragment_favorite">
         <action
-            android:id="@+id/action_profileFragment_to_movieListFragment"
+            android:id="@+id/action_favoriteFragment_to_movieListFragment"
             app:destination="@id/movieListFragment" />
+        <action
+            android:id="@+id/action_favoriteFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
 </navigation>
