@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -51,10 +52,22 @@ class FavoriteFragment : Fragment() {
 
     private fun processFavoriteState(state: FavoriteScreenState) {
         when (state) {
-            FavoriteScreenState.Empty -> {}
-            FavoriteScreenState.Error -> {}
-            FavoriteScreenState.Loading -> {}
+            FavoriteScreenState.Empty -> {
+                binding.pb.visibility = View.GONE
+                Toast.makeText(context, "Тут пусто", Toast.LENGTH_SHORT).show()
+            }
+
+            FavoriteScreenState.Error -> {
+                binding.pb.visibility = View.GONE
+                Toast.makeText(context, "Ошибка загрузки", Toast.LENGTH_SHORT).show()
+            }
+
+            FavoriteScreenState.Loading -> {
+                binding.pb.visibility = View.VISIBLE
+            }
+
             is FavoriteScreenState.Result -> {
+                binding.pb.visibility = View.GONE
                 movieCardsAdapter.setData(state.list)
             }
         }

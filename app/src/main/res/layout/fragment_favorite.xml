@@ -7,6 +7,17 @@
     android:background="@color/white_background"
     tools:context=".presentation.fragments.FavoriteFragment">
 
+    <ProgressBar
+        android:id="@+id/pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <TextView
         android:id="@+id/tvHeaderFavorite"
         style="@style/fontStyle_1.Bold"

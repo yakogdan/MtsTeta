@@ -31,16 +31,20 @@ class FavoriteViewModel @Inject constructor(
 
     fun getMovieCards() {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
-            favoriteInteractor.getMovieCardsFromDB()
-                .catch { _favoriteStateFlow.emit(FavoriteScreenState.Error) }
-                .onStart { _favoriteStateFlow.value = FavoriteScreenState.Loading }
-                .collect { list ->
-                    if (list.isEmpty()) {
-                        _favoriteStateFlow.value = FavoriteScreenState.Empty
-                    } else {
-                        _favoriteStateFlow.value = FavoriteScreenState.Result(list)
+            if (favoriteInteractor.movieCardsDbIsEmpty()) {
+                _favoriteStateFlow.value = FavoriteScreenState.Empty
+            } else {
+                favoriteInteractor.getMovieCardsFromDB()
+                    .catch { _favoriteStateFlow.value = FavoriteScreenState.Error }
+                    .onStart { _favoriteStateFlow.value = FavoriteScreenState.Loading }
+                    .collect { list ->
+                        if (list.isEmpty()) {
+                            _favoriteStateFlow.value = FavoriteScreenState.Empty
+                        } else {
+                            _favoriteStateFlow.value = FavoriteScreenState.Result(list)
+                        }
                     }
-                }
+            }
         }
     }
 
