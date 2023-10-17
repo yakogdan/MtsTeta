@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -62,16 +61,17 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        movieCardsAdapter = MovieCardsAdapter(onItemClickListener = { movieCard ->
-            navController?.navigate(
-                R.id.action_favoriteFragment_to_movieDetailsFragment,
-                bundleOf("movieCard" to movieCard)
-            )
-        }, onItemLongClickListener = {
-            Toast.makeText(
-                context, "toast from favorite", Toast.LENGTH_SHORT
-            ).show()
-        })
+        movieCardsAdapter = MovieCardsAdapter(
+            onItemClickListener = { movieCard ->
+                navController?.navigate(
+                    R.id.action_favoriteFragment_to_movieDetailsFragment,
+                    bundleOf("movieCard" to movieCard)
+                )
+            },
+            onItemLongClickListener = { movieCard ->
+                viewModel.deleteMovieCard(movieCard)
+            }
+        )
         binding.rvMovieCard.apply {
             adapter = movieCardsAdapter
             addItemDecoration(

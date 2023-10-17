@@ -2,6 +2,7 @@ package com.yakogdan.mtsteta.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yakogdan.domain.entities.moviecards.MovieCardDomain
 import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.domain.interactors.MovieListInteractor
 import com.yakogdan.mtsteta.presentation.screenstates.MovieListScreenState
@@ -42,6 +43,12 @@ class MovieListViewModel @Inject constructor(
                         _movieListStateFlow.value = MovieListScreenState.Result(list)
                     }
                 }
+        }
+    }
+
+    fun addMovieCard(movieCard: MovieCardDomain) {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+            movieListInteractor.addMovieCard(movieCard)
         }
     }
 

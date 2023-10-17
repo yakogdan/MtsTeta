@@ -2,6 +2,7 @@ package com.yakogdan.mtsteta.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yakogdan.domain.entities.moviecards.MovieCardDomain
 import com.yakogdan.domain.interactors.FavoriteInteractor
 import com.yakogdan.mtsteta.presentation.screenstates.FavoriteScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,6 +41,12 @@ class FavoriteViewModel @Inject constructor(
                         _favoriteStateFlow.value = FavoriteScreenState.Result(list)
                     }
                 }
+        }
+    }
+
+    fun deleteMovieCard(movieCard: MovieCardDomain) {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+            favoriteInteractor.deleteMovieCard(movieCard)
         }
     }
 }

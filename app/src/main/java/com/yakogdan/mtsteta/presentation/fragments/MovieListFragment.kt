@@ -92,7 +92,9 @@ class MovieListFragment : Fragment() {
                     bundleOf("movieCard" to movieCard)
                 )
             },
-            onItemLongClickListener = {Toast.makeText(context, "toast from list", Toast.LENGTH_SHORT).show()}
+            onItemLongClickListener = { movieCard ->
+                viewModel.addMovieCard(movieCard)
+            }
         )
         binding.apply {
             rvMovieGenres.apply {

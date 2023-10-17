@@ -12,7 +12,7 @@ class FavoriteInteractor @Inject constructor(
     suspend fun getMovieCardsFromDB(): Flow<List<MovieCardDomain>> =
         movieRepository.getMovieCardsFromDB()
 
-    private suspend fun deleteMovieCard(movieCard: MovieCardDomain) =
+    suspend fun deleteMovieCard(movieCard: MovieCardDomain) =
         movieRepository.deleteMovieCard(movieCard)
 
     suspend fun movieCardsDbIsEmpty(): Boolean {
