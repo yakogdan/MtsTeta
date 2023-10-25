@@ -2,7 +2,7 @@ package com.yakogdan.domain.entities.moviecards
 
 import java.io.Serializable
 
-class MovieCardDomain(
+data class MovieCardDomain(
     val id: Long = 0,
     val title: String,
     val description: String,
