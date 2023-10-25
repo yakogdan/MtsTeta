@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yakogdan.domain.entities.moviecards.MovieCardDomain
 import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
+import com.yakogdan.domain.interactors.MovieGenresInteractor
 import com.yakogdan.domain.interactors.MovieListInteractor
 import com.yakogdan.mtsteta.presentation.screenstates.MovieListScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
-    private val movieListInteractor: MovieListInteractor
+    private val movieListInteractor: MovieListInteractor,
+    private val movieGenresInteractor: MovieGenresInteractor
 ) : ViewModel() {
 
     // MovieCard
@@ -59,7 +61,7 @@ class MovieListViewModel @Inject constructor(
 
     fun getMovieGenres() {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
-            movieListInteractor.getMovieGenres().collect {
+            movieGenresInteractor.getMovieGenresFromRepo().collect {
                 _movieGenresStateFlow.value = it
             }
         }

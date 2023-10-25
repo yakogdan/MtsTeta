@@ -51,7 +51,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
     // Room
-    val roomVersion = "2.5.2"
+    val roomVersion = "2.6.0"
     api("androidx.room:room-runtime:$roomVersion")
     api("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
