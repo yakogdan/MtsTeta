@@ -9,14 +9,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.reset
 
 class MovieDetailInteractorTest {
 
     private val movieRepository = mock<MovieRepository>()
+
+    @AfterEach
+    fun tearDown() {
+        reset(movieRepository)
+    }
 
     @Test
     fun `should return the same movie details as in repository`() = runTest {
@@ -34,7 +41,7 @@ class MovieDetailInteractorTest {
         )
         val testData = flowOf(movieDetails)
         val movieId = 7L
-        Mockito.`when`(movieRepository.getMovieDetailsFromApi(movieId)).thenReturn(testData)
+        `when`(movieRepository.getMovieDetailsFromApi(movieId)).thenReturn(testData)
 
         val interactor = MovieDetailsInteractor(movieRepository = movieRepository)
 
@@ -54,7 +61,7 @@ class MovieDetailInteractorTest {
         val testData = flowOf(listOf(movieActor, movieActor))
         val movieId = 22L
 
-        Mockito.`when`(movieRepository.getMovieActorsFromApi(movieId)).thenReturn(testData)
+        `when`(movieRepository.getMovieActorsFromApi(movieId)).thenReturn(testData)
 
         val interactor = MovieDetailsInteractor(movieRepository = movieRepository)
 

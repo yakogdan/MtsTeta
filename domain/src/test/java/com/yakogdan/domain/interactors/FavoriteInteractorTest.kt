@@ -7,14 +7,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.reset
 
 class FavoriteInteractorTest {
 
     private val movieRepository = mock<MovieRepository>()
+
+    @AfterEach
+    fun tearDown() {
+        reset(movieRepository)
+    }
 
     @Test
     fun `should return the same movie cards as in repository`() = runTest {
@@ -29,7 +36,7 @@ class FavoriteInteractorTest {
         )
         val testData = flowOf(listOf(movieCard, movieCard))
 
-        Mockito.`when`(movieRepository.getMovieCardsFromDB()).thenReturn(testData)
+        `when`(movieRepository.getMovieCardsFromDB()).thenReturn(testData)
 
         val interactor = FavoriteInteractor(movieRepository = movieRepository)
 
@@ -43,7 +50,7 @@ class FavoriteInteractorTest {
     fun `should return the same data about the emptiness of the database as in repository`() =
         runTest {
             val testData = false
-            Mockito.`when`(movieRepository.movieCardsDbIsEmpty()).thenReturn(testData)
+            `when`(movieRepository.movieCardsDbIsEmpty()).thenReturn(testData)
 
             val interactor = FavoriteInteractor(movieRepository = movieRepository)
 

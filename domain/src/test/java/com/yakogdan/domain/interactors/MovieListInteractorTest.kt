@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.kotlin.mock
 
 class MovieListInteractorTest {
@@ -29,7 +29,7 @@ class MovieListInteractorTest {
         )
         val testData = flowOf(listOf(movieCard, movieCard))
 
-        Mockito.`when`(movieRepository.getMovieCardsFromApi()).thenReturn(testData)
+        `when`(movieRepository.getMovieCardsFromApi()).thenReturn(testData)
 
         val interactor = MovieListInteractor(movieRepository = movieRepository)
 

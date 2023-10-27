@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.kotlin.mock
 
 class MovieGenresInteractorTest {
@@ -22,7 +22,7 @@ class MovieGenresInteractorTest {
         val movieGenre = MovieGenreDomain(id = 1L, title = "test title")
         val testData = flowOf(listOf(movieGenre, movieGenre))
 
-        Mockito.`when`(movieRepository.getMovieGenresFromRepo()).thenReturn(testData)
+        `when`(movieRepository.getMovieGenresFromRepo()).thenReturn(testData)
 
         val interactor = MovieGenresInteractor(movieRepository = movieRepository)
 
