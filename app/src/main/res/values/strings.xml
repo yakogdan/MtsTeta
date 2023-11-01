@@ -38,4 +38,5 @@
     <string name="loading_error">Ошибка загрузки. Включите VPN.</string>
     <string name="loading">Загрузка…</string>
     <string name="favotire">Избранное</string>
+    <string name="popular_now">Популярно сейчас</string>
 </resources>

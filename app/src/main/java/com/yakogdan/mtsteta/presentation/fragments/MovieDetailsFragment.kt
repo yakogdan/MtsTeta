@@ -5,18 +5,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import coil.load
 import com.yakogdan.domain.entities.moviecards.MovieCardDomain
-import com.yakogdan.domain.entities.moviedetails.MovieDetailsDomain
+import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.mtsteta.R
 import com.yakogdan.mtsteta.databinding.FragmentMovieDetailsBinding
-import com.yakogdan.mtsteta.presentation.adapters.MovieActorsAdapter
-import com.yakogdan.mtsteta.presentation.adapters.MovieGenresAdapter
-import com.yakogdan.mtsteta.presentation.itemdecoration.HorizontalItemDecoration
 import com.yakogdan.mtsteta.presentation.screenstates.MovieActorsScreenState
 import com.yakogdan.mtsteta.presentation.screenstates.MovieDetailsScreenState
 import com.yakogdan.mtsteta.presentation.viewmodels.MovieDetailsViewModel
@@ -33,10 +55,6 @@ class MovieDetailsFragment : Fragment() {
 
     private val viewModel by viewModels<MovieDetailsViewModel>()
 
-    private lateinit var movieGenresAdapter: MovieGenresAdapter
-
-    private lateinit var movieActorsAdapter: MovieActorsAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -46,7 +64,13 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initAdapters()
+        binding.movieDetailCv.setContent {
+            Scaffold(bottomBar = {
+                NavigationBar()
+            }, content = {
+                MovieDetailsScreen(it)
+            })
+        }
         bundleArgs.movieCard?.let { movieCard ->
             val movieId = movieCard.id
             viewModel.apply {
@@ -66,6 +90,21 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
+    @Composable
+    fun NavigationBar() {
+        var selectedItem by remember { mutableIntStateOf(0) }
+        val items = listOf("Songs", "Artists", "Playlists")
+
+        NavigationBar {
+            items.forEachIndexed { index, item ->
+                NavigationBarItem(icon = { Icon(Icons.Filled.Favorite, contentDescription = item) },
+                    label = { Text(item) },
+                    selected = selectedItem == index,
+                    onClick = { selectedItem = index })
+            }
+        }
+    }
+
     private fun getMovieActorsFromApi(state: MovieActorsScreenState) {
         when (state) {
             MovieActorsScreenState.Error -> {
@@ -77,14 +116,13 @@ class MovieDetailsFragment : Fragment() {
             }
 
             is MovieActorsScreenState.Result -> {
-                movieActorsAdapter.setData(state.actors)
+
             }
         }
     }
 
     private fun processMovieDetailsState(
-        state: MovieDetailsScreenState,
-        movieCard: MovieCardDomain
+        state: MovieDetailsScreenState, movieCard: MovieCardDomain
     ) {
         when (state) {
             MovieDetailsScreenState.Error -> {
@@ -96,49 +134,62 @@ class MovieDetailsFragment : Fragment() {
             }
 
             is MovieDetailsScreenState.Result -> {
-                setData(movieCard = movieCard, movieDetails = state.movieDetails)
+
             }
         }
     }
 
-    private fun setData(movieCard: MovieCardDomain, movieDetails: MovieDetailsDomain) {
-        movieGenresAdapter.setData(movieDetails.genres)
-        with(binding) {
-            ivMoviePoster.load("https://www.themoviedb.org/t/p/w1000_and_h450_multi_faces" + movieCard.posterPath)
-            tvMovieTitle.text = movieDetails.title
-            rb.rating = movieDetails.voteAverage.toFloat() / 2
-            tvDate.text = movieDetails.releaseDate
-            tvAgeRestriction.text = getAgeRestriction(movieDetails.adult)
-            tvMovieDescription.text = movieDetails.description
-        }
-    }
+    @Composable
+    fun MovieDetailsScreen(paddingValues: PaddingValues) {
+        Column(modifier = Modifier.padding(paddingValues)) {
+            Text(text = stringResource(R.string.popular_now))
 
-    private fun initAdapters() {
-        movieGenresAdapter = MovieGenresAdapter(onItemClickListener = { movieGenres ->
-            Toast.makeText(
-                context, movieGenres.title, Toast.LENGTH_SHORT
-            ).show()
-        })
-        movieActorsAdapter = MovieActorsAdapter()
-        binding.apply {
-            rvGenresDM.apply {
-                adapter = movieGenresAdapter
-                addItemDecoration(
-                    HorizontalItemDecoration(
-                        startFirst = 54, endAll = 25
-                    )
+            val movieGenreListTest = listOf(
+                MovieGenreDomain(1L, "test title 1"),
+                MovieGenreDomain(2L, "test title 2"),
+                MovieGenreDomain(3L, "test title 3"),
+                MovieGenreDomain(4L, "test title 4")
+            )
+
+            LazyRow {
+                items(movieGenreListTest, key = { it.id }) {
+                    Box(Modifier.background(Color.Red)) {
+                        Text(text = it.title, fontSize = 30.sp)
+                    }
+                    Spacer(modifier = Modifier.padding(10.dp))
+                }
+            }
+            val movieCardsListTest = listOf(
+                MovieCardDomain(
+                    id = 1L,
+                    title = "test title 1",
+                    description = "test desc 1",
+                    voteAverage = 5.0,
+                    adult = true,
+                    posterPath = "dfgh"
+                ),
+                MovieCardDomain(
+                    id = 2L,
+                    title = "test title 2 ",
+                    description = "test desc 2",
+                    voteAverage = 3.0,
+                    adult = true,
+                    posterPath = "asdf"
                 )
-            }
-            rvActors.apply {
-                adapter = movieActorsAdapter
-                addItemDecoration(
-                    HorizontalItemDecoration(
-                        startFirst = 54, endAll = 25
-                    )
-                )
+            )
+
+            LazyColumn {
+                items(movieCardsListTest, key = { it.id }) {
+                    Column(Modifier.background(Color.Yellow)) {
+                        Text(text = it.title)
+                        Spacer(modifier = Modifier.padding(10.dp))
+                        Text(text = it.description)
+                        Spacer(modifier = Modifier.padding(10.dp))
+                        Text(text = it.voteAverage.toString())
+                    }
+                    Spacer(modifier = Modifier.padding(20.dp))
+                }
             }
         }
     }
-
-    private fun getAgeRestriction(adult: Boolean): String = if (adult) "18+" else "12+"
 }
