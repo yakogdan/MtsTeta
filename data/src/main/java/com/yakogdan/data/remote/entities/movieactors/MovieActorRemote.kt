@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MovieActorRemote(
     @SerialName("name")
-    val name: String? = "",
+    val name: String,
     @SerialName("profile_path")
-    val profilePath: String? = ""
+    val profilePath: String
 )

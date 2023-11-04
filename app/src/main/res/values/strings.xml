@@ -17,7 +17,7 @@
     <string name="navigation_home">Home</string>
     <string name="navigation_settings">Settings</string>
     <string name="settings">Настройки</string>
-    <string name="actor_photo">Actor photo</string>
+    <string name="actor_photo">Фото актёра</string>
     <string name="wrath_of_man_title">Гнев человеческий</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="interests">Интересы</string>
@@ -37,6 +37,8 @@
     <string name="sign_out">Выйти</string>
     <string name="loading_error">Ошибка загрузки. Включите VPN.</string>
     <string name="loading">Загрузка…</string>
-    <string name="favotire">Избранное</string>
+    <string name="favorite">Избранное</string>
     <string name="popular_now">Популярно сейчас</string>
+    <string name="beginning_link_actors">https://www.themoviedb.org/t/p/w600_and_h900_bestv2</string>
+    <string name="beginning_link_movie_card">https://www.themoviedb.org/t/p/w600_and_h900_bestv2</string>
 </resources>

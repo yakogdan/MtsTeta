@@ -56,11 +56,13 @@ dependencies {
     implementation(project(":data"))
 
     implementation("androidx.core:core-ktx:1.12.0")
+
+    // TODO: Удалить лишние после полного перехода на compose
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-
+ 
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("org.mockito:mockito-core:4.0.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
@@ -74,7 +76,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.activity:activity-compose:1.8.0")
-    implementation(platform("androidx.compose:compose-bom:2023.06.00"))
+    val composeBomVersion = "2023.06.00"
+    implementation(platform("androidx.compose:compose-bom:$composeBomVersion"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:$composeBomVersion"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
@@ -95,8 +100,9 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:$hiltVersion")
 
     // Coil
-    implementation("io.coil-kt:coil:2.4.0")
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    // TODO: Удалить не compose версию после полного перехода на compose
+    implementation("io.coil-kt:coil:2.5.0")
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
