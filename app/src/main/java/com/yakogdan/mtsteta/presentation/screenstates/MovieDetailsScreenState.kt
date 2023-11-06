@@ -4,9 +4,9 @@ import com.yakogdan.domain.entities.moviedetails.MovieDetailsDomain
 
 sealed class MovieDetailsScreenState {
 
-    object Error : MovieDetailsScreenState()
+    data object Error : MovieDetailsScreenState()
 
-    object Loading : MovieDetailsScreenState()
+    data object Loading : MovieDetailsScreenState()
 
     class Result(val movieDetails: MovieDetailsDomain) : MovieDetailsScreenState()
 }

@@ -3,10 +3,13 @@ package com.yakogdan.mtsteta.presentation.ui.screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
@@ -14,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -25,83 +29,102 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.yakogdan.domain.entities.movieactors.MovieActorDomain
-import com.yakogdan.domain.entities.moviecards.MovieCardDomain
+import com.yakogdan.domain.entities.moviedetails.MovieDetailsDomain
 import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.mtsteta.R
+import com.yakogdan.mtsteta.presentation.ui.items.MovieGenreItem
 
 @Composable
-fun MovieDetailsScreen(movieCard: MovieCardDomain, movieActors: List<MovieActorDomain>) {
+fun MovieDetailsScreen(movieDetails: MovieDetailsDomain, movieActors: List<MovieActorDomain>) {
     Column {
-        AsyncImage(
-            modifier = Modifier.height(230.dp),
-            model = movieCard.posterPath,
-            contentDescription = stringResource(id = R.string.movie_poster),
-            contentScale = ContentScale.FillWidth
-        )
+        Poster(movieDetails)
+
         Spacer(modifier = Modifier.padding(10.dp))
 
-        val movieGenreListTest = listOf(
-            MovieGenreDomain(1L, "комедии"),
-            MovieGenreDomain(2L, "боевики"),
-            MovieGenreDomain(3L, "драмы"),
-            MovieGenreDomain(4L, "мелодрамы"),
-            MovieGenreDomain(5L, "артхаус")
-        )
-        LazyRow {
-            items(movieGenreListTest, key = { it.id }) {
-                MovieGenreItem(movieGenre = it)
-            }
+        Genres(movieDetails)
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        MovieInfo(movieDetails)
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        Description(movieDetails)
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        Actors(movieActors)
+    }
+}
+
+@Composable
+private fun Poster(movieDetails: MovieDetailsDomain) {
+    AsyncImage(
+        modifier = Modifier.height(230.dp),
+        model = movieDetails.posterPath,
+        contentDescription = stringResource(id = R.string.movie_poster),
+        contentScale = ContentScale.FillWidth
+    )
+}
+
+@Composable
+private fun Genres(movieDetails: MovieDetailsDomain) {
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        contentPadding = PaddingValues(start = 20.dp)
+    ) {
+        items(movieDetails.genres, key = { it.id }) {
+            MovieGenreItem(movieGenre = it)
         }
+    }
+}
 
-        Row {
-            Column {
-                Text(text = "Гнев человеческий")
-                Text(text = "ratingBar")
-                Text(text = "22.2.2023")
-            }
-            Text(
-                modifier = Modifier
-                    .padding(top = 2.dp, start = 2.dp)
-                    .border(BorderStroke(1.dp, Color.Black), CircleShape)
-                    .padding(5.dp),
-                text = getAgeRestriction(movieCard),
-                fontSize = 8.sp,
-                fontFamily = FontFamily(Font(R.font.roboto_regular)),
-            )
+@Composable
+private fun MovieInfo(movieDetails: MovieDetailsDomain) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Column {
+            Text(text = movieDetails.title)
+            Text(text = "ratingBar")
+            Text(text = movieDetails.releaseDate)
         }
-
-        Spacer(modifier = Modifier.padding(10.dp))
-
-        Text(text = stringResource(id = R.string.movie_description))
-
-        Spacer(modifier = Modifier.padding(10.dp))
-
-        val movieActorsListTest = listOf(
-            MovieActorDomain(
-                name = "Test Name1",
-                profilePath = "testPath1"
-            ),
-            MovieActorDomain(
-                name = "Test Name2",
-                profilePath = "testPath2"
-            )
+        Text(
+            modifier = Modifier
+                .padding(top = 2.dp, start = 2.dp)
+                .border(BorderStroke(1.dp, Color.Black), CircleShape)
+                .padding(5.dp),
+            text = getAgeRestriction(movieDetails),
+            fontSize = 8.sp,
+            fontFamily = FontFamily(Font(R.font.roboto_regular)),
         )
-        LazyRow {
-            items(movieActorsListTest, key = { it.name }) {
-                Column(Modifier.background(Color.Yellow)) {
-                    AsyncImage(
-                        modifier = Modifier.height(196.dp),
+    }
+}
 
-                        // TODO: Поправить movieActors[0].profilePath
-                        model = stringResource(R.string.beginning_link_actors) + movieActors[0].profilePath,
-                        contentDescription = stringResource(id = R.string.actor_photo),
-                        contentScale = ContentScale.FillWidth
-                    )
-                    Spacer(modifier = Modifier.padding(10.dp))
-                    Text(text = it.name)
-                }
-                Spacer(modifier = Modifier.padding(20.dp))
+@Composable
+private fun Description(movieDetails: MovieDetailsDomain) {
+    Text(text = movieDetails.description)
+}
+
+@Composable
+private fun Actors(movieActors: List<MovieActorDomain>) {
+    LazyRow {
+        items(movieActors, key = { it.name }) {
+            Column(Modifier.background(Color.Yellow)) {
+                AsyncImage(
+                    modifier = Modifier.height(196.dp),
+
+                    // TODO: Поправить movieActors[0].profilePath
+                    model = stringResource(R.string.beginning_link_actors) + movieActors[0].profilePath,
+                    contentDescription = stringResource(id = R.string.actor_photo),
+                    contentScale = ContentScale.FillWidth
+                )
+                Spacer(modifier = Modifier.padding(10.dp))
+                Text(text = it.name)
             }
+            Spacer(modifier = Modifier.padding(20.dp))
         }
     }
 }
@@ -109,32 +132,38 @@ fun MovieDetailsScreen(movieCard: MovieCardDomain, movieActors: List<MovieActorD
 @Preview
 @Composable
 fun MovieDetailsScreenPreview() {
-    val movieCard = MovieCardDomain(
+    val movieGenres = listOf(
+        MovieGenreDomain(1L, "комедии"),
+        MovieGenreDomain(2L, "боевики"),
+        MovieGenreDomain(3L, "драмы"),
+        MovieGenreDomain(4L, "мелодрамы"),
+        MovieGenreDomain(5L, "артхаус")
+    )
+    val movieDetails = MovieDetailsDomain(
         id = 1L,
-        title = "test title 1",
-        description = "test desc 1",
-        voteAverage = 5.0,
+        title = "Гнев человеческий",
+        description = stringResource(id = R.string.movie_description),
         adult = true,
-        posterPath = "dfgh"
+        genres = movieGenres,
+        posterPath = "dfgh",
+        releaseDate = "22.4.2021",
+        voteAverage = 5.0
     )
 
     val movieActors = listOf(
         MovieActorDomain(
-            name = "Test Name1",
-            profilePath = "testPath1"
-        ),
-        MovieActorDomain(
-            name = "Test Name2",
-            profilePath = "testPath2"
+            name = "Джейсон Стэйтем", profilePath = "testPath1"
+        ), MovieActorDomain(
+            name = "Холт Маккэллани", profilePath = "testPath2"
         )
     )
     Box(modifier = Modifier.background(Color.White)) {
-        MovieDetailsScreen(movieCard = movieCard, movieActors = movieActors)
+        MovieDetailsScreen(movieDetails = movieDetails, movieActors = movieActors)
     }
 }
 
-private fun getAgeRestriction(movieCard: MovieCardDomain): String {
-    return if (movieCard.adult) {
+private fun getAgeRestriction(movieDetails: MovieDetailsDomain): String {
+    return if (movieDetails.adult) {
         "18+"
     } else {
         "12+"

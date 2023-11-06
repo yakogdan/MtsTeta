@@ -4,9 +4,9 @@ import com.yakogdan.domain.entities.movieactors.MovieActorDomain
 
 sealed class MovieActorsScreenState {
 
-    object Error : MovieActorsScreenState()
+    data object Error : MovieActorsScreenState()
 
-    object Loading : MovieActorsScreenState()
+    data object Loading : MovieActorsScreenState()
 
     class Result(val actors: List<MovieActorDomain>) : MovieActorsScreenState()
 }

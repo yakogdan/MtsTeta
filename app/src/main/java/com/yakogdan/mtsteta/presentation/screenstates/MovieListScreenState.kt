@@ -4,9 +4,9 @@ import com.yakogdan.domain.entities.moviecards.MovieCardDomain
 
 sealed class MovieListScreenState {
 
-    object Error : MovieListScreenState()
+    data object Error : MovieListScreenState()
 
-    object Loading : MovieListScreenState()
+    data object Loading : MovieListScreenState()
 
     class Result(val list: List<MovieCardDomain>) : MovieListScreenState()
 }

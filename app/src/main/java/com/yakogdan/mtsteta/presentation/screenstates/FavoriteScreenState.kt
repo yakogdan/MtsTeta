@@ -4,11 +4,11 @@ import com.yakogdan.domain.entities.moviecards.MovieCardDomain
 
 sealed class FavoriteScreenState {
 
-    object Error : FavoriteScreenState()
+    data object Error : FavoriteScreenState()
 
-    object Loading : FavoriteScreenState()
+    data object Loading : FavoriteScreenState()
 
-    object Empty : FavoriteScreenState()
+    data object Empty : FavoriteScreenState()
 
     class Result(val list: List<MovieCardDomain>) : FavoriteScreenState()
 }

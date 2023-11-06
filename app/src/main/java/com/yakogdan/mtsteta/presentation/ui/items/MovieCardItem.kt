@@ -1,4 +1,4 @@
-package com.yakogdan.mtsteta.presentation.ui.screens
+package com.yakogdan.mtsteta.presentation.ui.items
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
