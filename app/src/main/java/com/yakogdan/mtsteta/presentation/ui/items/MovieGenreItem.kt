@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.yakogdan.domain.entities.moviegenres.MovieGenreDomain
 import com.yakogdan.mtsteta.R
+import com.yakogdan.mtsteta.presentation.ui.theme.regular
 
 @Composable
 fun MovieGenreItem(movieGenre: MovieGenreDomain) {
@@ -26,6 +27,7 @@ fun MovieGenreItem(movieGenre: MovieGenreDomain) {
             .padding(start = 6.dp, top = 3.dp, end = 6.dp, bottom = 4.dp),
         fontSize = 14.sp,
         fontFamily = FontFamily(Font(R.font.roboto_regular)),
+        style = regular,
         text = movieGenre.title
     )
 }

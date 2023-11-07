@@ -15,17 +15,17 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.yakogdan.domain.entities.moviecards.MovieCardDomain
 import com.yakogdan.mtsteta.R
+import com.yakogdan.mtsteta.presentation.ui.theme.BlackText
+import com.yakogdan.mtsteta.presentation.ui.theme.bold
+import com.yakogdan.mtsteta.presentation.ui.theme.regular
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -37,10 +37,8 @@ fun MovieCard(
     Card(
         modifier = Modifier
             .size(width = 165.dp, height = 380.dp)
-            .combinedClickable(
-                onClick = { onItemClickListener },
-                onLongClick = { onItemLongClickListener }
-            )
+            .combinedClickable(onClick = { onItemClickListener },
+                onLongClick = { onItemLongClickListener })
     ) {
         Column {
             AsyncImage(
@@ -57,10 +55,10 @@ fun MovieCard(
             )
 
             Text(
-                modifier = Modifier.padding(horizontal = 2.dp),
                 text = movieCard.title,
+                modifier = Modifier.padding(horizontal = 2.dp),
                 fontSize = 14.sp,
-                fontFamily = FontFamily(Font(R.font.roboto_bold))
+                style = bold
             )
 
             Spacer(
@@ -70,21 +68,21 @@ fun MovieCard(
             )
 
             Text(
-                modifier = Modifier.padding(horizontal = 2.dp),
                 text = movieCard.description,
+                modifier = Modifier.padding(horizontal = 2.dp),
                 fontSize = 12.sp,
-                fontFamily = FontFamily(Font(R.font.roboto_regular)),
+                style = regular,
                 maxLines = 6
             )
 
             Text(
+                text = getAgeRestriction(movieCard),
                 modifier = Modifier
                     .padding(top = 2.dp, start = 2.dp)
-                    .border(BorderStroke(1.dp, Color.Black), CircleShape)
-                    .padding(5.dp),
-                text = getAgeRestriction(movieCard),
+                    .border(BorderStroke(0.7.dp, BlackText), CircleShape)
+                    .padding(start = 4.dp, top = 5.dp, end = 4.dp, bottom = 5.dp),
+                style = regular,
                 fontSize = 8.sp,
-                fontFamily = FontFamily(Font(R.font.roboto_regular)),
             )
         }
     }
