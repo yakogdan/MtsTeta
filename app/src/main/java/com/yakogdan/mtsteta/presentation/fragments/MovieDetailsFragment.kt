@@ -6,18 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,6 +18,7 @@ import com.yakogdan.mtsteta.R
 import com.yakogdan.mtsteta.databinding.FragmentMovieDetailsBinding
 import com.yakogdan.mtsteta.presentation.screenstates.MovieActorsScreenState
 import com.yakogdan.mtsteta.presentation.screenstates.MovieDetailsScreenState
+import com.yakogdan.mtsteta.presentation.ui.navigation.BottomNavBar
 import com.yakogdan.mtsteta.presentation.viewmodels.MovieDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -53,7 +44,7 @@ class MovieDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.movieDetailCv.setContent {
             Scaffold(bottomBar = {
-                NavigationBar()
+                BottomNavBar()
             }, content = {
                 Text(modifier = Modifier.padding(it), text = "test")
             })
@@ -73,21 +64,6 @@ class MovieDetailsFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.movieActorsStateFlow.collect { state ->
                 getMovieActorsFromApi(state)
-            }
-        }
-    }
-
-    @Composable
-    fun NavigationBar() {
-        var selectedItem by remember { mutableIntStateOf(0) }
-        val items = listOf("Songs", "Artists", "Playlists")
-
-        NavigationBar {
-            items.forEachIndexed { index, item ->
-                NavigationBarItem(icon = { Icon(Icons.Filled.Favorite, contentDescription = item) },
-                    label = { Text(item) },
-                    selected = selectedItem == index,
-                    onClick = { selectedItem = index })
             }
         }
     }
